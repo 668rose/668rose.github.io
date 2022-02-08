@@ -40,3 +40,5 @@ favicon: /favicon.png
 # Google Analytics Tracking ID
 google_analytics:
 
+
+theme: jekyll-theme-cayman
