@@ -4,11 +4,40 @@
   
     
     <entry>
+      <title>指针做函数参数的问题</title>
+      <link href="/2022/02/09/zhi-zhen-zuo-han-shu-can-shu-de-wen-ti/"/>
+      <url>/2022/02/09/zhi-zhen-zuo-han-shu-can-shu-de-wen-ti/</url>
+      
+        <content type="html"><![CDATA[<h1 id="C语言中指针做函数参数的易错问题"><a href="#C语言中指针做函数参数的易错问题" class="headerlink" title="C语言中指针做函数参数的易错问题"></a>C语言中指针做函数参数的易错问题</h1><p> 在第一次编写创建链表的函数时，我是这样写的;<br> 是在主函数定义了:<br> struct student* p;<br> p&#x3D;NULL;<br> 将p作为input函数形参;而函数没有返回值；<br> 如下:<br>void input(struct student* head)<br>{</p><h2 id="struct-student-p2-p1"><a href="#struct-student-p2-p1" class="headerlink" title="struct student* p2, * p1;"></a>struct student* p2, * p1;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);head = p1;        //试图在此改变head指针指向，来改变pfor (;p1-&gt;number != 0;)&#123;    p1 = (struct student*)malloc(LEN);    scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);    scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);    scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);    p2-&gt;next = p1;    p2 = p1;&#125;</code></pre><p>}<br> 试图这样改变主函数中的p;<br> 而实际执行后主函数中的p并没有指向head;<br> p依然是NULL;</p><p> 在翻书后发现书中使用函数返回值来实现改变p的指向;<br> 于是，我作出如下改变,结果可行;<br> struct student* input(void)<br>{</p><h2 id="struct-student-p1-p2-head"><a href="#struct-student-p1-p2-head" class="headerlink" title="struct student* p1, * p2, * head;"></a>struct student* p1, * p2, * head;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);head = p1;for (;p1-&gt;number != 0;)&#123;    p1 = (struct student*)malloc(LEN);    scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);    scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);    scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);    p2-&gt;next = p1;    p2 = p1;&#125;return head;</code></pre><p>}</p><p>可为什么最初的方法不行呢？指针不是传地址吗？<br>input函数中改变head的地址了呀;这令我百思不得其解;<br>直到我看到BraveY的一篇博客文章，<br>其中讲到:<br>指针形参也是一种值的传递，只是因为传递的是一个对象的地址，<br>因此可以通过解引用符*来对该对象直接进行修改，<br>所以在被调用函数中可以直接根据地址来进行操作，<br>从而使得该地址的变量被修改。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+            <tag> C函数 </tag>
+            
+            <tag> C指针 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2022/02/09/hello-world/"/>
       <url>/2022/02/09/hello-world/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
       
       
       
