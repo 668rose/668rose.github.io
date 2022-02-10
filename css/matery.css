@@ -241,7 +241,7 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    background-image: linear-gradient(#a27ba5 40%, rgba(156, 39, 176, 0.75) 90%, rgba(239, 83, 80, 0.65) 5%, #a16da1 5%);
 }
 
 .text-color {
@@ -257,7 +257,7 @@ mark {
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    background: linear-gradient(to right, #bb618b 0%, #0f9d58 100%);
     opacity: 0.8;
 }
 
@@ -400,7 +400,7 @@ header .side-nav .social-link {
 }
 
 .scroll-down {
-    background: #333;
+    background: #ffbd2e;
     margin: 100px auto;
     -webkit-animation: scroll-down 1.5s infinite;
     -moz-animation: scroll-down 1.5s infinite;
@@ -1839,7 +1839,7 @@ footer .social-statis {
 }
 
 footer a {
-    color: #fff;
+    color: #2464ba;
 }
 
 footer .copy-right {
@@ -1908,7 +1908,7 @@ p.search-result-summary{
 }
 
 .top-scroll .btn-floating {
-    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%);
+    background: linear-gradient(to bottom right, #FF5E3A 0%, #2bb6a0 100%);
     width: 48px;
     height: 48px;
 }
