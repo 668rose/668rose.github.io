@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>hexo上下边框换及回到顶部按钮混合颜色设置</title>
+      <link href="/2022/02/11/hexo-shang-xia-bian-kuang-huan-ji-hui-dao-ding-bu-an-niu-hun-he-yan-se-she-zhi/"/>
+      <url>/2022/02/11/hexo-shang-xia-bian-kuang-huan-ji-hui-dao-ding-bu-an-niu-hun-he-yan-se-she-zhi/</url>
+      
+        <content type="html"><![CDATA[<h1 id="hexo上下边框换及回到顶部按钮混合颜色设置"><a href="#hexo上下边框换及回到顶部按钮混合颜色设置" class="headerlink" title="hexo上下边框换及回到顶部按钮混合颜色设置"></a>hexo上下边框换及回到顶部按钮混合颜色设置</h1><p>找到并打开themes\hexo-theme-materysource\css\matery.css</p><h2 id="上下边框"><a href="#上下边框" class="headerlink" title="上下边框"></a>上下边框</h2><p>按住‘ctrl+f’查找bg-color<br>将自带的颜色修改为自己喜欢的颜色，且可按照相同格式添加颜色<br>实现混色</p><h2 id="回到顶部按钮"><a href="#回到顶部按钮" class="headerlink" title="回到顶部按钮"></a>回到顶部按钮</h2><p>按住‘ctrl+f’查找回到顶部按钮样式<br>修改颜色方式同上</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo文章新建及使用技巧</title>
       <link href="/2022/02/10/hexo-wen-zhang-xin-jian-ji-shi-yong-ji-qiao/"/>
       <url>/2022/02/10/hexo-wen-zhang-xin-jian-ji-shi-yong-ji-qiao/</url>
