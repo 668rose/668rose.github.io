@@ -5,7 +5,8 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="指针做函数参数的问题, Forging">
-    <meta name="description" content="C语言中指针做函数参数的易错问题C语言中函数多个返回值问题 在第一次编写创建链表的函数时，我是这样写的; 是在主函数定义了: struct student* p; p&amp;#x3D;NULL; 将p作为input函数形参;而函数没有返回值； 如">
+    <meta name="description" content="C语言中指针做函数参数的易错问题C语言中函数多个返回值问题 在第一次编写创建链表的函数时，我是这样写的; 是在主函数定义了: struct student* p;
+p&amp;#x3D;NULL; 将p作为input函数形参;而函数没有返回值； 如">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -477,7 +478,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    763
+                    793
                 </div>
                 
 
@@ -507,59 +508,71 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="C语言中指针做函数参数的易错问题"><a href="#C语言中指针做函数参数的易错问题" class="headerlink" title="C语言中指针做函数参数的易错问题"></a>C语言中指针做函数参数的易错问题</h1><h1 id="C语言中函数多个返回值问题"><a href="#C语言中函数多个返回值问题" class="headerlink" title="C语言中函数多个返回值问题"></a>C语言中函数多个返回值问题</h1><p> 在第一次编写创建链表的函数时，我是这样写的;<br> 是在主函数定义了:<br> struct student* p;<br> p&#x3D;NULL;<br> 将p作为input函数形参;而函数没有返回值；<br> 如下:<br>void input(struct student* head)<br>{</p>
-<h2 id="struct-student-p2-p1"><a href="#struct-student-p2-p1" class="headerlink" title="struct student* p2, * p1;"></a>struct student* p2, * p1;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);
-scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
-scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
-scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
-head = p1; //试图改变head指针，来改变p
-for (;p1-&gt;number != 0;)
+                <h1 id="C语言中指针做函数参数的易错问题"><a href="#C语言中指针做函数参数的易错问题" class="headerlink" title="C语言中指针做函数参数的易错问题"></a>C语言中指针做函数参数的易错问题</h1><h1 id="C语言中函数多个返回值问题"><a href="#C语言中函数多个返回值问题" class="headerlink" title="C语言中函数多个返回值问题"></a>C语言中函数多个返回值问题</h1><p> 在第一次编写创建链表的函数时，我是这样写的;<br> 是在主函数定义了:<br> <pre class="line-numbers language-none"><code class="language-none">struct student* p;
+p&#x3D;NULL;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br> 将p作为input函数形参;而函数没有返回值；<br> 如下:<br> <pre class="line-numbers language-none"><code class="language-none">void input(struct student* head)
 &#123;
-    p1 = (struct student*)malloc(LEN);
-    scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
-    scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
-    scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
-    p2-&gt;next = p1;
-    p2 = p1;
-&#125;
-</code></pre>
-<p>}<br> 试图这样改变主函数中的p;<br> 而实际执行后主函数中的p并没有指向head;<br> p依然是NULL;</p>
-<p> 在翻书后发现书中使用函数返回值来实现改变p的指向;<br> 于是，我作出如下改变,结果可行;<br> struct student* input(void)<br>{</p>
-<h2 id="struct-student-p1-p2-head"><a href="#struct-student-p1-p2-head" class="headerlink" title="struct student* p1, * p2, * head;"></a>struct student* p1, * p2, * head;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);
-scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
-scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
-scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
-head = p1;
-for (;p1-&gt;number != 0;)
+	struct student* p2, * p1;
+	p1 &#x3D; p2 &#x3D; (struct student*)malloc(LEN);
+	scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
+	scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+	scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+	head &#x3D; p1; &#x2F;&#x2F;试图改变head指针，来改变p
+	for (;p1-&gt;number !&#x3D; 0;)
+	&#123;
+		p1 &#x3D; (struct student*)malloc(LEN);
+		scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
+		scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+		scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+		p2-&gt;next &#x3D; p1;
+		p2 &#x3D; p1;
+	&#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br> 试图这样改变主函数中的p;<br> 而实际执行后主函数中的p并没有指向head;<br> p依然是NULL;</p>
+<p> 在翻书后发现书中使用函数返回值来实现改变p的指向;<br> 于是，我作出如下改变,结果可行;<br> <pre class="line-numbers language-none"><code class="language-none"> struct student* input(void)
 &#123;
-    p1 = (struct student*)malloc(LEN);
-    scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
-    scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
-    scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
-    p2-&gt;next = p1;
-    p2 = p1;
-&#125;
-return head;
-</code></pre>
-<p>}</p>
-<p>可为什么最初的方法不行呢？指针不是传地址吗？<br>input函数中改变head的地址了呀;这令我百思不得其解;<br>直到我看到BraveY的一篇博客文章，<br>其中讲到:<br>指针形参也是一种‘值的传递’，只是因为传递的是一个对象的地址，<br>因此可以通过解引用符<em>来对该对象直接进行修改，<br>所以在被调用函数中可以直接根据地址来进行操作，<br>从而使得该地址的变量被修改。<br>正确写法:<br>首先明确这段代码的意图是想让p指针这个变量的值在被调用函数中发生变化，<br>因为需要修改实参变量的值，所以需要传入实参的地址，<br>指向指针的地址也就是一个二级指针。<br>所以形参应该是一个二级指针，<br>在被调用函数中使用</em>来对地址进行解引用。<br>看到这里我恍然大悟!<br>将代码改为:<br>主函数中:<br>input(&amp;p);<br>input函数中:<br>void input(struct student** p)<br>{</p>
-<h2 id="struct-student-p1-p2-head-1"><a href="#struct-student-p1-p2-head-1" class="headerlink" title="struct student* p1, * p2, * head;"></a>struct student* p1, * p2, * head;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);
-scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
-scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
-scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
-head = p1;
-for (;p1-&gt;number != 0;)
+	struct student* p1, * p2, * head;
+	p1 &#x3D; p2 &#x3D; (struct student*)malloc(LEN);
+	scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
+	scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+	scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+	head &#x3D; p1;
+	for (;p1-&gt;number !&#x3D; 0;)
+	&#123;
+		p1 &#x3D; (struct student*)malloc(LEN);
+		scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
+		scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+		scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+		p2-&gt;next &#x3D; p1;
+		p2 &#x3D; p1;
+	&#125;
+	return head;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可为什么最初的方法不行呢？指针不是传地址吗？<br>input函数中改变head的地址了呀;这令我百思不得其解;<br>直到我看到BraveY的一篇博客文章，<br>其中讲到:</p>
+<blockquote>
+<p>指针形参也是一种‘值的传递’，只是因为传递的是一个对象的地址，<br>因此可以通过解引用符*来对该对象直接进行修改，<br>所以在被调用函数中可以直接根据地址来进行操作，<br>从而使得该地址的变量被修改。</p>
+</blockquote>
+<p>正确写法:</p>
+<blockquote>
+<p>首先明确这段代码的意图是想让p指针这个变量的值在被调用函数中发生变化，<br>因为需要修改实参变量的值，所以需要传入实参的地址，<br>指向指针的地址也就是一个二级指针。<br>所以形参应该是一个二级指针，<br>在被调用函数中使用*来对地址进行解引用。</p>
+</blockquote>
+<p>看到这里我恍然大悟!<br>将代码改为:<br>主函数中:<br><code>input(&amp;p);</code><br>input函数中:</p>
+<pre class="line-numbers language-none"><code class="language-none">void input(struct student** p)
 &#123;
-    p1 = (struct student*)malloc(LEN);
-    scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
-    scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
-    scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
-    p2-&gt;next = p1;
-    p2 = p1;
-&#125;
-*p = head;
-</code></pre>
-<p>}</p>
+	struct student* p1, * p2, * head;
+	p1 &#x3D; p2 &#x3D; (struct student*)malloc(LEN);
+	scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
+	scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+	scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+	head &#x3D; p1;
+	for (;p1-&gt;number !&#x3D; 0;)
+	&#123;
+		p1 &#x3D; (struct student*)malloc(LEN);
+		scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);
+		scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+		scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+		p2-&gt;next &#x3D; p1;
+		p2 &#x3D; p1;
+	&#125;
+	*p &#x3D; head;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>经测试，没有问题。<br>你可能会说，这么麻烦干嘛……（擦汗）<br>因为这样可以实现函数多个返回值（机智），<br>一次改变多个主函数数据，<br>同样的思路将需要改变的变量做参数即可，哈哈^_^</p>
 
                 
@@ -682,18 +695,17 @@ for (;p1-&gt;number != 0;)
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/02/09/zhi-zhen-zuo-han-shu-can-shu-de-wen-ti/">
+                <a href="/2022/02/10/hexo-wen-zhang-xin-jian-ji-shi-yong-ji-qiao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="指针做函数参数的问题">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="hexo文章新建及使用技巧">
                         
-                        <span class="card-title">指针做函数参数的问题</span>
+                        <span class="card-title">hexo文章新建及使用技巧</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -703,35 +715,26 @@ for (;p1-&gt;number != 0;)
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    C语言
+                            <a href="/categories/hexo/" class="post-category">
+                                    hexo
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                        <span class="chip bg-color">C语言</span>
-                    </a>
-                    
-                    <a href="/tags/C%E5%87%BD%E6%95%B0/">
-                        <span class="chip bg-color">C函数</span>
-                    </a>
-                    
-                    <a href="/tags/C%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">C指针</span>
+                    <a href="/tags/hexo%E4%BD%BF%E7%94%A8/">
+                        <span class="chip bg-color">hexo使用</span>
                     </a>
                     
                 </div>
@@ -993,7 +996,7 @@ for (;p1-&gt;number != 0;)
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">763</span>
+                        class="white-color">1.2k</span>
             
             
             
