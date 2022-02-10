@@ -509,7 +509,8 @@
             <div id="articleContent">
                 <h1 id="C语言中指针做函数参数的易错问题"><a href="#C语言中指针做函数参数的易错问题" class="headerlink" title="C语言中指针做函数参数的易错问题"></a>C语言中指针做函数参数的易错问题</h1><p> 在第一次编写创建链表的函数时，我是这样写的;<br> 是在主函数定义了:<br> struct student* p;<br> p&#x3D;NULL;<br> 将p作为input函数形参;而函数没有返回值；<br> 如下:<br>void input(struct student* head)<br>{</p>
 <h2 id="struct-student-p2-p1"><a href="#struct-student-p2-p1" class="headerlink" title="struct student* p2, * p1;"></a>struct student* p2, * p1;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);
-scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
 head = p1;        //试图在此改变head指针指向，来改变p
 for (;p1-&gt;number != 0;)
 &#123;
@@ -524,7 +525,8 @@ for (;p1-&gt;number != 0;)
 <p>}<br> 试图这样改变主函数中的p;<br> 而实际执行后主函数中的p并没有指向head;<br> p依然是NULL;</p>
 <p> 在翻书后发现书中使用函数返回值来实现改变p的指向;<br> 于是，我作出如下改变,结果可行;<br> struct student* input(void)<br>{</p>
 <h2 id="struct-student-p1-p2-head"><a href="#struct-student-p1-p2-head" class="headerlink" title="struct student* p1, * p2, * head;"></a>struct student* p1, * p2, * head;</h2><pre><code>p1 = p2 = (struct student*)malloc(LEN);
-scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
+scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);
+scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);
 head = p1;
 for (;p1-&gt;number != 0;)
 &#123;
@@ -720,16 +722,16 @@ return head;
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/09/hello-world/">
+                <a href="/2022/02/09/zhi-zhen-zuo-han-shu-can-shu-de-wen-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="指针做函数参数的问题">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">指针做函数参数的问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -744,11 +746,32 @@ return head;
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            668rose
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                    C语言
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">C语言</span>
+                    </a>
+                    
+                    <a href="/tags/C%E5%87%BD%E6%95%B0/">
+                        <span class="chip bg-color">C函数</span>
+                    </a>
+                    
+                    <a href="/tags/C%E6%8C%87%E9%92%88/">
+                        <span class="chip bg-color">C指针</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -950,7 +973,7 @@ return head;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">540</span>
+                        class="white-color">465</span>
             
             
             
