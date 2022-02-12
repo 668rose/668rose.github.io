@@ -371,7 +371,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
+    var bannerUrl = "/medias/banner/" + new Date().getMinutes() + '.jpg';
     $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
@@ -392,19 +392,19 @@
             <div class="tag-chips">
                 
                 
-                <a href="/tags/matery%E8%BE%B9%E6%A1%86%E9%A2%9C%E8%89%B2/" title="matery边框颜色: 1">
+                <a href="/tags/hexo%E4%BD%BF%E7%94%A8/" title="hexo使用: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="matery边框颜色" style="background-color: #F9EBEA;">matery边框颜色
+                            data-tagname="hexo使用" style="background-color: #F9EBEA;">hexo使用
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/hexo%E4%BD%BF%E7%94%A8/" title="hexo使用: 1">
+                <a href="/tags/matery%E8%BE%B9%E6%A1%86%E9%A2%9C%E8%89%B2/" title="matery边框颜色: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="hexo使用" style="background-color: #F5EEF8;">hexo使用
+                            data-tagname="matery边框颜色" style="background-color: #F5EEF8;">matery边框颜色
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -460,7 +460,7 @@
 <script type="text/javascript">
     
 
-    $('#tag-wordcloud').jQCloud([{"text":"matery边框颜色","weight":1,"link":"/tags/matery边框颜色/"},{"text":"hexo使用","weight":1,"link":"/tags/hexo使用/"},{"text":"C语言","weight":1,"link":"/tags/C语言/"},{"text":"C函数","weight":1,"link":"/tags/C函数/"},{"text":"C指针","weight":1,"link":"/tags/C指针/"}], {
+    $('#tag-wordcloud').jQCloud([{"text":"hexo使用","weight":1,"link":"/tags/hexo使用/"},{"text":"matery边框颜色","weight":1,"link":"/tags/matery边框颜色/"},{"text":"C语言","weight":1,"link":"/tags/C语言/"},{"text":"C函数","weight":1,"link":"/tags/C函数/"},{"text":"C指针","weight":1,"link":"/tags/C指针/"}], {
         autoResize: true
     });
 </script>

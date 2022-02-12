@@ -329,6 +329,19 @@ p&amp;#x3D;NULL; 将p作为input函数形参;而函数没有返回值； 如">
 </header>
 
     
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '123456';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
 
 
 
@@ -493,7 +506,7 @@ p&amp;#x3D;NULL; 将p作为input函数形参;而函数没有返回值； 如">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-02-10
+                    2022-02-12
                 </div>
                 
 
