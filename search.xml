@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>hexo文章设置密码注意事项</title>
+      <link href="/2022/02/12/hexo-wen-zhang-she-zhi-mi-ma-zhu-yi-shi-xiang/"/>
+      <url>/2022/02/12/hexo-wen-zhang-she-zhi-mi-ma-zhu-yi-shi-xiang/</url>
+      
+        <content type="html"><![CDATA[<p>在使用hexo中想要给文章设置密码</p><p>如何开启文章密码就不再说了，百度一下就行</p><p>说一下我在这个过程中遇到的没有百度到的问题</p><p>你在博客文章设置密码时是这样的吗？</p><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220212233451552.png" alt="image-20220212233451552"></p><p>这样的话在你以为成功设置后，进入你的这篇文章。</p><blockquote><p>输入你设定的密码，发现怎么输入都是密码错误</p></blockquote><p>出现这样的问题我们只需来到只需来到</p><p>[oschina的解密加密板块](<a href="https://tool.oschina.net/encrypt?type=2">在线加密解密 (oschina.net)</a>)</p><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220212234817159.png" alt="image-20220212234817159"></p><p>明文处就是你要设置的密码，然后选择加密方式</p><p>得出哈希值，复制哈希值到你的博客文章password这栏</p><p>注意password：后有一个空格</p><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220212235111165.png" alt="image-20220212235111165"></p><p>这样进入你要加密的文章时，只要输入你设置的密码（不是哈希值，是明码），便可进入^_^</p><p>第一次使用typora写博客，确实方便，尤其是在博客文章中插图片。在成功配置前出了一下问题，不过网上都有解决方案^_^</p><p>2022-2-13,0:00</p><p>嘿嘿，刚好这个点</p><p>睡觉（月亮）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo文章密码使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>matery上下边框换及回到顶部按钮混合颜色设置</title>
       <link href="/2022/02/11/hexo-shang-xia-bian-kuang-huan-ji-hui-dao-ding-bu-an-niu-hun-he-yan-se-she-zhi/"/>
       <url>/2022/02/11/hexo-shang-xia-bian-kuang-huan-ji-hui-dao-ding-bu-an-niu-hun-he-yan-se-she-zhi/</url>
       
-        <content type="html"><![CDATA[<h1 id="hexo上下边框换及回到顶部按钮混合颜色设置"><a href="#hexo上下边框换及回到顶部按钮混合颜色设置" class="headerlink" title="hexo上下边框换及回到顶部按钮混合颜色设置"></a>hexo上下边框换及回到顶部按钮混合颜色设置</h1><p>找到并打开themes\hexo-theme-materysource\css\matery.css</p><h2 id="上下边框"><a href="#上下边框" class="headerlink" title="上下边框"></a>上下边框</h2><p>按住‘ctrl+f’查找bg-color<br>将自带的颜色修改为自己喜欢的颜色，且可按照相同格式添加颜色<br>实现混色</p><h2 id="回到顶部按钮"><a href="#回到顶部按钮" class="headerlink" title="回到顶部按钮"></a>回到顶部按钮</h2><p>按住‘ctrl+f’查找回到顶部按钮样式<br>修改颜色方式同上</p><h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><p>同样方法查找‘#’，可修改各种颜色<br>如文章字体颜色、网页页脚字体颜色……</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="hexo上下边框换及回到顶部按钮混合颜色设置"><a href="#hexo上下边框换及回到顶部按钮混合颜色设置" class="headerlink" title="hexo上下边框换及回到顶部按钮混合颜色设置"></a>hexo上下边框换及回到顶部按钮混合颜色设置</h1><p>找到并打开themes\hexo-theme-matery\source\css\matery.css</p><h2 id="上下边框"><a href="#上下边框" class="headerlink" title="上下边框"></a>上下边框</h2><p>按住‘ctrl+f’查找bg-color<br>将自带的颜色修改为自己喜欢的颜色，且可按照相同格式添加颜色<br>实现混色</p><h2 id="回到顶部按钮"><a href="#回到顶部按钮" class="headerlink" title="回到顶部按钮"></a>回到顶部按钮</h2><p>按住‘ctrl+f’查找回到顶部按钮样式<br>修改颜色方式同上</p><h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><p>同样方法查找‘#’，可修改各种颜色<br>如文章字体颜色、网页页脚字体颜色……</p>]]></content>
       
       
       <categories>
