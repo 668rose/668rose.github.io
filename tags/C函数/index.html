@@ -371,7 +371,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getMinutes() + '.jpg';
+    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
     $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
@@ -401,19 +401,10 @@
                 </a>
                 
                 
-                <a href="/tags/hexo%E4%BD%BF%E7%94%A8/" title="hexo使用: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="hexo使用" style="background-color: #F5EEF8;">hexo使用
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/tags/C%E8%AF%AD%E8%A8%80/" title="C语言: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="C语言" style="background-color: #D5F5E3;">C语言
+                            data-tagname="C语言" style="background-color: #F5EEF8;">C语言
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -422,7 +413,7 @@
                 <a href="/tags/C%E5%87%BD%E6%95%B0/" title="C函数: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
-                            data-tagname="C函数" style="background-color: #E8F8F5;">C函数
+                            data-tagname="C函数" style="background-color: #D5F5E3;">C函数
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -431,7 +422,16 @@
                 <a href="/tags/C%E6%8C%87%E9%92%88/" title="C指针: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="C指针" style="background-color: #FEF9E7;">C指针
+                            data-tagname="C指针" style="background-color: #E8F8F5;">C指针
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/hexo%E4%BD%BF%E7%94%A8/" title="hexo使用: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="hexo使用" style="background-color: #FEF9E7;">hexo使用
                         <span class="tag-length">1</span>
                     </span>
                 </a>
