@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>51单片机数码管使用问题</title>
+      <link href="/2022/02/16/51-dan-pian-ji-shu-ma-guan-shi-yong-wen-ti/"/>
+      <url>/2022/02/16/51-dan-pian-ji-shu-ma-guan-shi-yong-wen-ti/</url>
+      
+        <content type="html"><![CDATA[<center>51单片机数码管使用问题</center><p>在想让数码管显示时间如：</p><p>00：01：59</p><p>且按时钟一样进行，每秒加一</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdio.h&gt;unsigned int sec1, sec2, min1, min2, hour;void main()&#123;for (;;hour++)&#123;for (min2 &#x3D; 0;min2 &lt; 6;min2++)&#123;for (min1 &#x3D; 0;min1 &lt; 10;min1++)&#123;for (sec2 &#x3D; 0;sec2 &lt; 6;sec2++)&#123;for (sec1 &#x3D; 0;sec1 &lt; 10;sec1++)&#123;printf(&quot;%d:&quot;, hour);printf(&quot;%d&quot;, min2);printf(&quot;%d:&quot;, min1);printf(&quot;%d&quot;, sec2);printf(&quot;%d:&quot;, sec1);printf(&quot;\n&quot;);if (hour &#x3D;&#x3D; 1)&#123;exit(0);&#125;&#125;&#125;&#125;&#125;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220217000252830.png" alt="image-20220217000252830"></p><p>经尝试，思路可行，但用同样思路将代码转换到51单片机上用数码管显示就出现了较大的重影问题，几乎是看不出正常数字。</p><p>用LCD1602显示容易且清晰。</p><p>解决出问题价值不太大，暂且放置。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 51MCU </category>
+          
+          <category> 待解决 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 单片机 </tag>
+            
+            <tag> 数码管 </tag>
+            
+            <tag> 待解决 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>第二篇</title>
       <link href="/2022/02/14/di-er-pian/"/>
       <url>/2022/02/14/di-er-pian/</url>
