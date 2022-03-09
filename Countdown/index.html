@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>�߿�����ʱ</title>
+</head>
+
+<link rel="stylesheet" href="gaokao.css">
+<link rel="stylesheet" href="sky.css">
+<script src="sky.js"></script>
+
+<body>
+
+<pre><code>&lt;div class=&quot;all&quot;&gt;
+    &lt;div id=&quot;wrap&quot;&gt;
+        
+        &lt;canvas id=&quot;canvas&quot; width=&quot;1920&quot; height=&quot;1080&quot;&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+</code></pre>
+<div id="Reporting">
+<script language="javaScript" >
+now = new Date(),hour = now.getHours()
+if (hour<6){document.write(" �賿�ã�ͬѧ��")}
+else if (hour<9){document.write("���Ϻã�ͬѧ��")}
+else if (hour<12){document.write("����ã�ͬѧ!")}
+else if (hour<14){document.write("����ã�ͬѧ��")}
+else if (hour<17){document.write("����ã�ͬѧ��")}
+else if (hour<19){document.write("�����ã�ͬѧ��")}
+else if (hour<22){document.write("���Ϻã�ͬѧ��")}
+else {document.write("ҹ���ˣ�ѧϰע���۾�Ŷ��")}
+</script>
+</div>
+
+<h2> ������2022��߿����С�</h2>
+
+<div id="timer"></div>
+<script language="javascript" type="text/javascript">
+    timer('2022-06-07 0:00:00','day');
+ 
+<pre><code>/**
+ * ��ε�һ��Ϊʱ���ַ������ڶ�������Ϊģʽѡ���������&#39;day&#39;������������ʱ���룬����ֵ����Сʱ��ȷ����
+ * @param timeStr
+ * @param item
+ */
+function timer(timeStr,item)&#123;
+    setInterval(function()&#123;
+        let nowTime = new Date(timeStr) - new Date;
+        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//����ʣ��ķ���
+        let seconds = parseInt(nowTime / 1000 % 60, 10);//����ʣ�������
+
+
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        if(item===&#39;day&#39;)&#123;
+            let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //����ʣ�������
+            let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //����ʣ���Сʱ
+            days = checkTime(days);
+            hours = checkTime(hours);
+            document.getElementById(&#39;timer&#39;).innerHTML=days + &quot;��&quot; + hours + &quot;Сʱ&quot; + minutes + &quot;��&quot; + seconds + &quot;��&quot;;
+        &#125;
+        else&#123;
+            let hours = parseInt(nowTime / ( 1000 * 60 * 60), 10); //����ʣ���Сʱ
+            hours = checkTime(hours);
+            document.getElementById(&quot;timer&quot;).innerHTML = hours + &quot;Сʱ&quot; + minutes + &quot;��&quot; + seconds + &quot;��&quot;;
+        &#125;
+    &#125;,1000);
+&#125;
+
+function checkTime(i) &#123; //��0-9������ǰ�����0����1��Ϊ01
+    if (i &lt; 10) &#123;
+        i = &quot;0&quot; + i;
+    &#125;
+    return i;
+&#125;
+</code></pre>
+<p></script></p>
+<p><a class="brinks">����ڷܶ��Ĺ����У��������ܴ��ۣ�Ω�м�ֵ��ף��Ż������ĳɹ���</a>    </p>
+<hr>
+<div class="bottomsay"></div>
+<details>
+<summary>
+����
+</summary>
+<p class="bottomsay">�����ߣ�è������</p>
+<p class="bottomsay">���汾Ϊδ��������˯��ʱ��������汾</p>
+<hr>
+<p class="bottomsay">��ʱ�棺</p>
+<a href="https://catdog007.icu/HTML/timer/timer.html" class="bottomsay">�߿�����ʱ��ʱ��</a>
+<p class="bottomsay">��л֧�֣�</p>
+</details>
+</div>
+
+
+</body>
+</html>
