@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>使用python中numpy计算多元一次方程</title>
+      <link href="/2022/03/21/shi-yong-python-zhong-numpy-ji-suan-duo-yuan-yi-ci-fang-cheng/"/>
+      <url>/2022/03/21/shi-yong-python-zhong-numpy-ji-suan-duo-yuan-yi-ci-fang-cheng/</url>
+      
+        <content type="html"><![CDATA[<center>使用python中numpy计算多元一次方程</center><p>在pycharm中Terminal中输入</p><p>pip install numpy</p><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220321115858744.png" alt="image-20220321115858744"></p><p>然后输入这串代码（例子）</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">import  numpy as np#多元线性方程组# x-2y+3z&#x3D;-10# 2x+3y+4z&#x3D;5# 3x+5y+7z&#x3D;7A&#x3D;np.array([[1,-2,3],[2,3,4],[3,5,7]])b&#x3D;np.array([-10,5,7])x&#x3D;np.linalg.solve(A,b)print(&#39;多元一次方程组的解：\n&#39;,x)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220321120059335.png" alt="image-20220321120059335"></p><p>run一下即可得出结果^_^</p><p><img src="https://gitee.com/rose668/img/raw/master/img/image-20220321120340636.png" alt="image-20220321120340636"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 多元一次方程 </tag>
+            
+            <tag> numpy </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>大学物理下学期</title>
       <link href="/2022/03/03/da-xue-wu-li-xia-xue-qi/"/>
       <url>/2022/03/03/da-xue-wu-li-xia-xue-qi/</url>
