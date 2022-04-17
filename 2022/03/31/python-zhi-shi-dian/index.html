@@ -7,10 +7,18 @@
     <meta name="keywords" content="python知识点, Forging">
     <meta name="description" content="python知识点备忘
 
-[TOC]
-一、快捷键（python IDLE）1、返回（复制）上一条语句AIt + p
-二、知识点1、 数值交换x , y &amp;#x3D; y , x
-2、 转义字符用于:’’’life is short,let\">
+
+
+
+一、快捷键（python IDLE）
+1、返回（复制）上一条语句
+
+
+二、知识点
+1、 数值交换
+2、 转义字符
+3、 原始字符串（使转义字符失效）
+4、三个单引号或双引号的使用：括号中内容会原样保存（包括换">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -641,14 +649,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -673,13 +681,57 @@
             <div id="articleContent">
                 <center>python知识点备忘</center>
 
-<p>[TOC]</p>
-<h1 id="一、快捷键（python-IDLE）"><a href="#一、快捷键（python-IDLE）" class="headerlink" title="一、快捷键（python IDLE）"></a>一、快捷键（python IDLE）</h1><h3 id="1、返回（复制）上一条语句"><a href="#1、返回（复制）上一条语句" class="headerlink" title="1、返回（复制）上一条语句"></a>1、返回（复制）上一条语句</h3><p>AIt + p</p>
-<h1 id="二、知识点"><a href="#二、知识点" class="headerlink" title="二、知识点"></a>二、知识点</h1><h3 id="1、-数值交换"><a href="#1、-数值交换" class="headerlink" title="1、 数值交换"></a>1、 数值交换</h3><p>x , y &#x3D; y , x</p>
-<h3 id="2、-转义字符"><a href="#2、-转义字符" class="headerlink" title="2、 转义字符"></a>2、 转义字符</h3><p>用于:’’’life is short,let\’ use python”’</p>
-<h3 id="3、-原始字符串（使转义字符失效）"><a href="#3、-原始字符串（使转义字符失效）" class="headerlink" title="3、 原始字符串（使转义字符失效）"></a>3、 原始字符串（使转义字符失效）</h3><p>Print（r”a\tdsfg\ndfgb\tsadsf”）</p>
+<!-- toc -->
+
+<ul>
+<li><a href="#%E4%B8%80-%E5%BF%AB%E6%8D%B7%E9%94%AEpython-idle">一、快捷键（python IDLE）</a><ul>
+<li><a href="#1-%E8%BF%94%E5%9B%9E%E5%A4%8D%E5%88%B6%E4%B8%8A%E4%B8%80%E6%9D%A1%E8%AF%AD%E5%8F%A5">1、返回（复制）上一条语句</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E7%9F%A5%E8%AF%86%E7%82%B9">二、知识点</a><ul>
+<li><a href="#1-%E6%95%B0%E5%80%BC%E4%BA%A4%E6%8D%A2">1、 数值交换</a></li>
+<li><a href="#2-%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6">2、 转义字符</a></li>
+<li><a href="#3-%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%BF%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E5%A4%B1%E6%95%88">3、 原始字符串（使转义字符失效）</a></li>
+<li><a href="#4-%E4%B8%89%E4%B8%AA%E5%8D%95%E5%BC%95%E5%8F%B7%E6%88%96%E5%8F%8C%E5%BC%95%E5%8F%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E6%8B%AC%E5%8F%B7%E4%B8%AD%E5%86%85%E5%AE%B9%E4%BC%9A%E5%8E%9F%E6%A0%B7%E4%BF%9D%E5%AD%98%E5%8C%85%E6%8B%AC%E6%8D%A2%E8%A1%8C">4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）</a></li>
+<li><a href="#5-%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E5%87%86%E8%BF%90%E7%AE%97%E6%A8%A1%E5%9D%97-decimal">5、浮点数的精准运算模块—-decimal</a></li>
+<li><a href="#6-%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95">6、科学计数法</a></li>
+<li><a href="#7-%E5%A4%8D%E6%95%B0">7、复数</a></li>
+<li><a href="#8-%E5%9C%B0%E6%9D%BF%E9%99%A4-">8、地板除— &#x2F;&#x2F;</a></li>
+<li><a href="#9-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0">9、内置函数</a><ul>
+<li><a href="#1divmod">（1）divmod</a></li>
+<li><a href="#2abs">（2）abs</a></li>
+<li><a href="#3pow">（3）pow</a></li>
+<li><a href="#4bool">（4）bool（）</a></li>
+</ul>
+</li>
+<li><a href="#10-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">10、类型转换</a></li>
+<li><a href="#11-x-y">11、x ** y</a></li>
+<li><a href="#12-%E7%9F%AD%E8%B7%AF%E9%80%BB%E8%BE%91">12、短路逻辑</a></li>
+<li><a href="#13-%E4%BC%98%E5%85%88%E7%BA%A7">13、优先级</a></li>
+<li><a href="#14-%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84">14、分支结构</a><ul>
+<li><a href="#1%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F">(1)条件表达式</a></li>
+<li><a href="#2%E5%88%86%E6%94%AF%E5%B5%8C%E5%A5%97">（2）分支嵌套</a></li>
+</ul>
+</li>
+<li><a href="#15-%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84">15、循环结构</a><ul>
+<li><a href="#1while">（1）while</a><ul>
+<li><a href="#1whileelse">[1]while………else……</a></li>
+<li><a href="#2whlie%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97">[2]whlie循环嵌套</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="一-快捷键python-idle">一、快捷键（python IDLE）</span></h1><h3><span id="1-返回复制上一条语句">1、返回（复制）上一条语句</span></h3><p>AIt + p</p>
+<h1><span id="二-知识点">二、知识点</span></h1><h3><span id="1-数值交换">1、 数值交换</span></h3><p>x , y &#x3D; y , x</p>
+<h3><span id="2-转义字符">2、 转义字符</span></h3><p>用于:’’’life is short,let\’ use python”’</p>
+<h3><span id="3-原始字符串使转义字符失效">3、 原始字符串（使转义字符失效）</span></h3><p>Print（r”a\tdsfg\ndfgb\tsadsf”）</p>
 <p>结果: a\tdsfg\ndfgb\tsadsf</p>
-<h3 id="4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）"><a href="#4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）" class="headerlink" title="4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）"></a>4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）</h3><h3 id="5、浮点数的精准运算模块—-decimal"><a href="#5、浮点数的精准运算模块—-decimal" class="headerlink" title="5、浮点数的精准运算模块—-decimal"></a>5、浮点数的精准运算模块—-decimal</h3><p>​    使用原因：</p>
+<h3><span id="4-三个单引号或双引号的使用括号中内容会原样保存包括换行">4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）</span></h3><h3><span id="5-浮点数的精准运算模块-decimal">5、浮点数的精准运算模块—-decimal</span></h3><p>​    使用原因：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">0.1+0.2
 0.30000000000000004<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -696,25 +748,25 @@ c &#x3D; decimal.Decimal(&#39;0.3&#39;)
 a + b &#x3D;&#x3D; c
 True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="6、科学计数法"><a href="#6、科学计数法" class="headerlink" title="6、科学计数法"></a>6、科学计数法</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">0.00000006
+<h3><span id="6-科学计数法">6、科学计数法</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">0.00000006
 6e-08		#0.6*10负8次方<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="7、复数"><a href="#7、复数" class="headerlink" title="7、复数"></a>7、复数</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">x &#x3D; 1 + 2j
+<h3><span id="7-复数">7、复数</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">x &#x3D; 1 + 2j
 x.real
 1.0
 x.imag
 2.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="8、地板除—-x2F-x2F"><a href="#8、地板除—-x2F-x2F" class="headerlink" title="8、地板除— &#x2F;&#x2F;"></a>8、地板除— &#x2F;&#x2F;</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">3 &#x2F;&#x2F; 2
+<h3><span id="8-地板除-x2fx2f">8、地板除— &#x2F;&#x2F;</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">3 &#x2F;&#x2F; 2
 1
 -3 &#x2F;&#x2F; 2
 -2				#结果向下取整<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="9、内置函数"><a href="#9、内置函数" class="headerlink" title="9、内置函数"></a>9、内置函数</h3><h4 id="（1）divmod"><a href="#（1）divmod" class="headerlink" title="（1）divmod"></a>（1）divmod</h4><p>divmod(x , y)返回（x &#x2F;&#x2F; y , x % y）</p>
+<h3><span id="9-内置函数">9、内置函数</span></h3><h4><span id="1divmod">（1）divmod</span></h4><p>divmod(x , y)返回（x &#x2F;&#x2F; y , x % y）</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">divmod(5 , 2)
 (2, 1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="（2）abs"><a href="#（2）abs" class="headerlink" title="（2）abs"></a>（2）abs</h4><p>取绝对值（模）</p>
+<h4><span id="2abs">（2）abs</span></h4><p>取绝对值（模）</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">abs(-6)
 6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -724,13 +776,13 @@ pow(5 , 0.5)
 2.23606797749979<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>pow函数基础功能不再赘述</p>
-<h4 id="（3）pow"><a href="#（3）pow" class="headerlink" title="（3）pow"></a>（3）pow</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">pow(2 , 3 , 6)
+<h4><span id="3pow">（3）pow</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">pow(2 , 3 , 6)
 2				
 #等价于
 2 ** 3 % 6
 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="（4）bool（）"><a href="#（4）bool（）" class="headerlink" title="（4）bool（）"></a>（4）bool（）</h4><p>用于返回一个布尔类型的值（True 或者 False）</p>
+<h4><span id="4bool">（4）bool（）</span></h4><p>用于返回一个布尔类型的值（True 或者 False）</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; bool(250)
 True
 &gt;&gt;&gt; bool(&quot;False&quot;)
@@ -744,7 +796,7 @@ False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 
 
 
-<h3 id="10、类型转换"><a href="#10、类型转换" class="headerlink" title="10、类型转换"></a>10、类型转换</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">complex(&quot;1+2j&quot;)
+<h3><span id="10-类型转换">10、类型转换</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">complex(&quot;1+2j&quot;)
 (1+2j)
 complex(&quot;1 + 2j&quot;)
 Traceback (most recent call last):
@@ -753,11 +805,11 @@ Traceback (most recent call last):
 ValueError: complex() arg is a malformed string<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>转换时不能有空格</p>
-<h3 id="11、x-y"><a href="#11、x-y" class="headerlink" title="11、x ** y"></a>11、x ** y</h3><p>x的y次方</p>
+<h3><span id="11-x-y">11、x ** y</span></h3><p>x的y次方</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">2 ** 3
 8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="12、短路逻辑"><a href="#12、短路逻辑" class="headerlink" title="12、短路逻辑"></a>12、短路逻辑</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">3 and 0
+<h3><span id="12-短路逻辑">12、短路逻辑</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">3 and 0
 0
 0 and 1
 0
@@ -766,12 +818,12 @@ ValueError: complex() arg is a malformed string<span aria-hidden="true" class="l
 3 or 0		#3 or 0 在读取到‘3 or’时已经可以得出结果
 3			#无需再继续读取，py直接扔出‘3’<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="13、优先级"><a href="#13、优先级" class="headerlink" title="13、优先级"></a>13、优先级</h3><blockquote>
+<h3><span id="13-优先级">13、优先级</span></h3><blockquote>
 <p>and大于or</p>
 </blockquote>
 <p><img src="https://i.bmp.ovh/imgs/2022/04/15/9f58cff9bc04b299.png" alt="python优先级"></p>
-<h3 id="14、分支结构"><a href="#14、分支结构" class="headerlink" title="14、分支结构"></a>14、分支结构</h3><p>elif等于C语言中else if</p>
-<h4 id="1-条件表达式"><a href="#1-条件表达式" class="headerlink" title="(1)条件表达式"></a>(1)条件表达式</h4><p>不喜欢用。。。。。</p>
+<h3><span id="14-分支结构">14、分支结构</span></h3><p>elif等于C语言中else if</p>
+<h4><span id="1条件表达式">(1)条件表达式</span></h4><p>不喜欢用。。。。。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 6
 b &#x3D; 8
 small &#x3D; a if a &lt; b else b
@@ -784,7 +836,7 @@ small &#x3D; a if a &lt; b else small &#x3D; b
 print(small)
 &#39;&#39;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="（2）分支嵌套"><a href="#（2）分支嵌套" class="headerlink" title="（2）分支嵌套"></a>（2）分支嵌套</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 3
+<h4><span id="2分支嵌套">（2）分支嵌套</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 3
 b &#x3D; 1
 c &#x3D; 2
 if a &lt; b:
@@ -802,7 +854,7 @@ else:
 <p><strong>注：</strong>if判断后需要有：</p>
 <p>​        else后同样需要：</p>
 <p>​        不能print（small &#x3D; a）</p>
-<h3 id="15、循环结构"><a href="#15、循环结构" class="headerlink" title="15、循环结构"></a>15、循环结构</h3><h4 id="（1）while"><a href="#（1）while" class="headerlink" title="（1）while"></a>（1）while</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 0
+<h3><span id="15-循环结构">15、循环结构</span></h3><h4><span id="1while">（1）while</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 0
 sum &#x3D; 0
 while a &lt; 10 :
     sum &#x3D; sum + a
@@ -822,7 +874,7 @@ SyntaxError: invalid syntax
 b++;
 SyntaxError: invalid syntax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="1-while………else……"><a href="#1-while………else……" class="headerlink" title="[1]while………else……"></a>[1]while………else……</h5><p>当循环正常退出时，才执行else里内容</p>
+<h5><span id="1whileelse">[1]while………else……</span></h5><p>当循环正常退出时，才执行else里内容</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#源代码
 day &#x3D; 1
 while day &lt; 8:
@@ -861,7 +913,7 @@ else:
 志坤好厉害^o^
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="2-whlie循环嵌套"><a href="#2-whlie循环嵌套" class="headerlink" title="[2]whlie循环嵌套"></a>[2]whlie循环嵌套</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#九九乘法表
+<h5><span id="2whlie循环嵌套">[2]whlie循环嵌套</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#九九乘法表
 i &#x3D; 1
 while i &lt;&#x3D; 9:
     j &#x3D; 1
@@ -1519,7 +1571,7 @@ while i &lt;&#x3D; 9:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">4.4k</span>
             
             
             
