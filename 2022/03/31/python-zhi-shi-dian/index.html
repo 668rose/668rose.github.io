@@ -642,21 +642,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-17
+                    2022-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    11 分
                 </div>
                 
 
@@ -702,6 +702,8 @@
 <li><a href="#2abs">（2）abs</a></li>
 <li><a href="#3pow">（3）pow</a></li>
 <li><a href="#4bool">（4）bool（）</a></li>
+<li><a href="#5len">（5）len（）</a></li>
+<li><a href="#6range">（6）range（）</a></li>
 </ul>
 </li>
 <li><a href="#10-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">10、类型转换</a></li>
@@ -717,6 +719,21 @@
 <li><a href="#1while">（1）while</a><ul>
 <li><a href="#1whileelse">[1]while………else……</a></li>
 <li><a href="#2whlie%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97">[2]whlie循环嵌套</a></li>
+</ul>
+</li>
+<li><a href="#2for">(2)for</a><ul>
+<li><a href="#1for%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97">[1]for循环嵌套</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#16-%E5%88%97%E8%A1%A8">16、列表</a><ul>
+<li><a href="#1%E5%8F%AF%E5%AD%98%E6%94%BE%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE">（1）可存放不同类型数据</a></li>
+<li><a href="#2%E9%85%8D%E5%90%88for%E5%BE%AA%E7%8E%AF%E4%BD%BF%E7%94%A8">(2)配合for循环使用</a></li>
+<li><a href="#3%E5%88%97%E8%A1%A8%E7%B4%A2%E5%BC%95">（3）列表索引</a></li>
+<li><a href="#4%E5%88%97%E8%A1%A8%E5%88%87%E7%89%87">(4)列表切片</a><ul>
+<li><a href="#1%E6%B3%A8%E5%88%97%E8%A1%A8%E5%88%87%E7%89%87%E4%B8%8D%E5%AF%B9%E5%88%97%E8%A1%A8%E4%B8%8B%E6%A0%87%E8%B6%8A%E7%95%8C%E5%A4%84%E7%90%86%E5%A6%82%E4%B8%8B">[1]**注:**列表切片不对列表下标越界处理，如下</a></li>
+<li><a href="#2%E5%8F%AF%E8%AE%BE%E7%BD%AE%E8%B7%A8%E5%BA%A6">[2]可设置跨度</a></li>
 </ul>
 </li>
 </ul>
@@ -794,8 +811,44 @@ False
 &gt;&gt;&gt; bool(range(0))
 False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h4><span id="5len">（5）len（）</span></h4><p><strong>返回值：</strong></p>
+<p>返回对象的长度（包含元素的数量）。<br><strong>基本用法：</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt; len(&quot;FishC&quot;)
+5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
+<h4><span id="6range">（6）range（）</span></h4><p>通常用于配合 for 循环指定循环的次数。</p>
+<p>range() 有三种参数的组合使用方式，但无论选择哪一种，其参数类型仅能为整数。</p>
+<p>如果 step 参数忽略，那么默认的步进跨度值为 1。</p>
+<p><strong>三种形式：</strong></p>
+<blockquote>
+<p>range(stop)</p>
+<p>range(start , stop)</p>
+<p>range(start , stop , step)</p>
+</blockquote>
+<p>示例:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in range(10):
+    print(i , end&#x3D;&#39; &#39;)
+print()
+print(&quot;······&quot;)
+for i in range(4 , 10):
+    print(i , end &#x3D; &#39; &#39;)
+print()
+print(&quot;······&quot;)
+for i in range(5 , 20 , 2):
+    print(i , end &#x3D; &#39; &#39;)
+print()
+print(&quot;······&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>结果：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">0 1 2 3 4 5 6 7 8 9 
+······
+4 5 6 7 8 9 
+······
+5 7 9 11 13 15 17 19 
+······<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>说明：</strong></p>
+<p>range（）中stop为不包含</p>
 <h3><span id="10-类型转换">10、类型转换</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">complex(&quot;1+2j&quot;)
 (1+2j)
 complex(&quot;1 + 2j&quot;)
@@ -936,6 +989,121 @@ while i &lt;&#x3D; 9:
 1 * 8 &#x3D; 8 2 * 8 &#x3D; 16 3 * 8 &#x3D; 24 4 * 8 &#x3D; 32 5 * 8 &#x3D; 40 6 * 8 &#x3D; 48 7 * 8 &#x3D; 56 8 * 8 &#x3D; 64 
 1 * 9 &#x3D; 9 2 * 9 &#x3D; 18 3 * 9 &#x3D; 27 4 * 9 &#x3D; 36 5 * 9 &#x3D; 45 6 * 9 &#x3D; 54 7 * 9 &#x3D; 63 8 * 9 &#x3D; 72 9 * 9 &#x3D; 81 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4><span id="2for">(2)for</span></h4><blockquote>
+<p>for 变量 in 可迭代对象</p>
+<p>​    statement(s)</p>
+</blockquote>
+<p>示例1：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt;for each in &quot;xiao kun kun&quot;:
+    print(each)
+
+    
+x
+i
+a
+o
+ 
+k
+u
+n
+ 
+k
+u
+n<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>示例2：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in range(10):
+    print(i , end&#x3D;&#39; &#39;)
+print()
+print(&quot;······&quot;)
+for i in range(4 , 10):
+    print(i , end &#x3D; &#39; &#39;)
+print()
+print(&quot;······&quot;)
+for i in range(5 , 20 , 2):
+    print(i , end &#x3D; &#39; &#39;)
+print()
+print(&quot;······&quot;)
+    
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果2：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">0 1 2 3 4 5 6 7 8 9 
+······
+4 5 6 7 8 9 
+······
+5 7 9 11 13 15 17 19 
+······<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5><span id="1for循环嵌套">[1]for循环嵌套</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#找出十以内所有素数
+k &#x3D; 0
+for i in range(1, 11):
+    k &#x3D; 0
+    for j in range(2, i):
+        if i % j !&#x3D; 0:
+            k +&#x3D; 1
+    if k &#x3D;&#x3D; i - 2:
+        print(i,&quot;是素数&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">2 是素数
+3 是素数
+5 是素数
+7 是素数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用while（for）…….else…..结构的进阶版：</p>
+<p>哈哈哈，这么简单的小程序还有进阶版，没想到吧^O^</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">#找出十以内所有素数进阶版
+for i in range(1, 11):
+
+    for j in range(2, i):
+        if i % j &#x3D;&#x3D; 0:
+            break
+    else:
+        print(i,&quot;是素数&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">1 是素数
+2 是素数
+3 是素数
+5 是素数
+7 是素数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>确实不需要增加变量（k）来计数了，真不错</p>
+<h3><span id="16-列表">16、列表</span></h3><h4><span id="1可存放不同类型数据">（1）可存放不同类型数据</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 23, &quot;点&quot;, 29, &quot;分&quot;]
+print(time)
+[&#39;现在是晚上&#39;, 23, &#39;点&#39;, 29, &#39;分&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4><span id="2配合for循环使用">(2)配合for循环使用</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">for time in time:
+    print(time, end&#x3D;&#39; &#39;)
+
+现在是晚上 23 点 29 分 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4><span id="3列表索引">（3）列表索引</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">#列表下标也可为负数
+time &#x3D; [&quot;现在是晚上&quot;, 23, &quot;点&quot;, 29, &quot;分&quot;]
+i &#x3D; len(time)
+while i &gt; 0:
+    print(time[-i],end&#x3D;&#39; &#39;)
+    i -&#x3D; 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">现在是晚上 23 点 29 分<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4><span id="4列表切片">(4)列表切片</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 23, &quot;点&quot;, 29, &quot;分&quot;]
+print(time[0:3])
+[&#39;现在是晚上&#39;, 23, &#39;点&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h5><span id="1注列表切片不对列表下标越界处理如下">[1]**注:**列表切片不对列表下标越界处理，如下</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">time[4:6]
+[&#39;分&#39;]
+time[4:100]
+[&#39;分&#39;]
+time[5:100]
+[]
+time[20:100]
+[]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5><span id="2可设置跨度">[2]可设置跨度</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#name[start:end:跨度]
+number &#x3D; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+number[2:9:2]
+[3, 5, 7, 9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -1571,7 +1739,7 @@ while i &lt;&#x3D; 9:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.4k</span>
+                        class="white-color">5.2k</span>
             
             
             
