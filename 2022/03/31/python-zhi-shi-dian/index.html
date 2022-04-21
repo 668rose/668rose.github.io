@@ -43,7 +43,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -642,21 +642,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-20
+                    2022-04-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    3.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    17 分
                 </div>
                 
 
@@ -748,6 +748,9 @@
 <li><a href="#32%E6%8E%92%E5%BA%8F">{3.2}排序</a></li>
 <li><a href="#41%E6%9F%A5count">{4.1}查count（）</a></li>
 <li><a href="#51%E6%94%B9copy">{5.1}改copy()</a></li>
+<li><a href="#6%E5%8A%A0-%E4%B9%98">{6}加、乘</a></li>
+<li><a href="#7%E5%B5%8C%E5%A5%97%E5%A4%9A%E7%BB%B4%E5%88%97%E8%A1%A8">{7}嵌套（多维列表）</a></li>
+<li><a href="#8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9C%8B%E4%BC%BC%E7%9B%B8%E5%90%8C%E5%AE%9E%E5%88%99%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%B9%E6%B3%95">{8}初始化的两种看似相同实则不同的方法</a></li>
 </ul>
 </li>
 </ul>
@@ -1236,10 +1239,77 @@ wsx &#x3D; [&quot;abc&quot;,&quot;qwe&quot;,&quot;rgy&quot;,&quot;qwe&quot;]
 wsx.index(&quot;qwe&quot;,2,3)
 ValueError: &#39;qwe&#39; is not in list<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h6><span id="51改copy">{5.1}改copy()</span></h6><pre class="line-numbers language-none"><code class="language-none">numbers_copy &#x3D; number.copy()
+<h6><span id="51改copy">{5.1}改copy()</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">numbers_copy &#x3D; number.copy()
 numbers_copy
 [9, 7, 6, 3, 2, 1, 0]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
+<h6><span id="6加-乘">{6}加、乘</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#加
+i &#x3D; [1, 2, 3]
+j &#x3D; [4, 5, 6]
+i + j
+[1, 2, 3, 4, 5, 6]
+#乘
+i*3
+[1, 2, 3, 1, 2, 3, 1, 2, 3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6><span id="7嵌套多维列表">{7}嵌套（多维列表）</span></h6><p>创立:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+a
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>访问：</p>
+<p>需使用循环</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in a:
+    for j in i:
+        print(j,end&#x3D;&quot; &quot;)
+    print()
+
+1 2 3 
+4 5 6 
+7 8 9 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>下标访问:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">a[0][0]
+1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h6><span id="8初始化的两种看似相同实则不同的方法">{8}初始化的两种看似相同实则不同的方法</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in range(3):
+    a[i] &#x3D; [0]*3
+
+a
+[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+b &#x3D; [[0]*3]*3
+b
+[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>两种结果看似相同，第二种甚至不需要使用循环就创建了一个二维列表</p>
+<p>但，实际上两种方法在内存上有很大差别</p>
+<p>先展示区别</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">a[1][1] &#x3D; 1
+a
+[[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+b[1][1] &#x3D; 1
+b
+[[0, 1, 0], [0, 1, 0], [0, 1, 0]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>a列表在更改a【1】【1】时实实在在就是更改a【1】【1】</p>
+<p>而b列表在更改b【1】【1】时，却更改了所有的第二列元素</p>
+<p>在此介绍一个运算符——-is</p>
+<p>is运算符用于检验两个变量是否指向同一个变量</p>
+<p>举例:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x &#x3D; &#39;xiaokunkun&#39;
+y &#x3D; &#39;xiaokunkun&#39;
+x is y
+True
+a &#x3D; 1
+b &#x3D; 2
+a is b
+False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/../../../../Typora/img/0b16d0dd169d5907.png"></p>
+<p>23集7分58秒，明天继续，今天到此为止</p>
 
                 
             </div>
@@ -1874,7 +1944,7 @@ numbers_copy
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">6.2k</span>
+                        class="white-color">6.6k</span>
             
             
             
