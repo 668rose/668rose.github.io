@@ -642,21 +642,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-27
+                    2022-06-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
+                    18 分
                 </div>
                 
 
@@ -752,6 +752,7 @@
 <li><a href="#7%E5%B5%8C%E5%A5%97%E5%A4%9A%E7%BB%B4%E5%88%97%E8%A1%A8">{7}嵌套（多维列表）</a></li>
 <li><a href="#8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9C%8B%E4%BC%BC%E7%9B%B8%E5%90%8C%E5%AE%9E%E5%88%99%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%B9%E6%B3%95">{8}初始化的两种看似相同实则不同的方法</a></li>
 <li><a href="#9%E6%B7%B1%E6%8B%B7%E8%B4%9D">{9}深拷贝</a></li>
+<li><a href="#10%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F">{10}列表推导式</a></li>
 </ul>
 </li>
 </ul>
@@ -1310,7 +1311,30 @@ a is b
 False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://s3.bmp.ovh/imgs/2022/04/22/a7d7be155092d19f.png"></p>
-<h6><span id="9深拷贝">{9}深拷贝</span></h6>
+<h6><span id="9深拷贝">{9}深拷贝</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">import copy
+x &#x3D; [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+y &#x3D; copy.deepcopy(x)
+x[1][1] &#x3D; 0
+x
+[[1, 2, 3], [4, 0, 6], [7, 8, 9]]
+y
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6><span id="10列表推导式">{10}列表推导式</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#示例一
+oho &#x3D; [1, 2, 3, 4, 5, 6]
+owo &#x3D; [i*2 for i in oho]
+owo
+[2, 4, 6, 8, 10, 12]
+#示例二
+matrix &#x3D; [[1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9]]
+diag &#x3D; [matrix[i][i] for i in range(len(matrix))]
+diag
+[1, 5, 9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
                 
             </div>
             <hr/>
@@ -1944,7 +1968,7 @@ False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">9.9k</span>
+                        class="white-color">10.8k</span>
             
             
             
