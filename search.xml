@@ -208,36 +208,11 @@
     
     
     <entry>
-      <title>C_Primer_Plus笔记</title>
-      <link href="/2022/04/02/c-primer-plus-bi-ji/"/>
-      <url>/2022/04/02/c-primer-plus-bi-ji/</url>
-      
-        <content type="html"><![CDATA[<center>C Primer Plus</center><h1><span id="scanf">scanf</span></h1><h1><span id="_bool">_Bool</span></h1><p>可代替int用来表示真假，占用一位储存空间。c99中添加。</p><p>C99提供了stdbool.h头文件，该头文件让bool成为_Bool的别名，而且还把true和false分别定义为1和0的符号常量。包含该头文件后，写出的代码可以与C++兼容，因为C++把bool、true和false定义为关键字。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> C语言 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> C语言学习 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>C语言备忘</title>
       <link href="/2022/03/31/c-yu-yan-bei-wang/"/>
       <url>/2022/03/31/c-yu-yan-bei-wang/</url>
       
-        <content type="html"><![CDATA[<center>C语言备忘</center><h1><span id="优先级和结合性">优先级和结合性</span></h1><p><img src="http://r9p7iakld.hb-bkt.clouddn.com//image-20220402142116257.png" alt="image-20220402142116257"></p>]]></content>
+        <content type="html"><![CDATA[<center>C语言备忘</center><h1><span id="优先级和结合性">优先级和结合性</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/06/20/dcbf07fcd4bc8e5d.png"></p><h1><span id="三目运算符">三目运算符</span></h1><blockquote><p>返回值 &#x3D; &lt;表达式1&gt; ? &lt;表达式2&gt; : &lt;表达式3&gt;;</p></blockquote><p><strong>返回值：先求表达式 1 的值，如果为真，则执行表达式 2，并返回表达式 2 的结果；如果表达式 1 的值为假，则执行表达式 3，并返回表达式 3 的结果。</strong></p>]]></content>
       
       
       <categories>
