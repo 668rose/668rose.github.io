@@ -1,0 +1,2 @@
+我将sakura.js与sakura-small.js互换了名字
+以达到改变效果

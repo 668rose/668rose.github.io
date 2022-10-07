@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>OCL电路解惑</title>
+      <link href="/2022/10/07/ocl-dian-lu-jie-huo/"/>
+      <url>/2022/10/07/ocl-dian-lu-jie-huo/</url>
+      
+        <content type="html"><![CDATA[<center>OCL电路解惑</center><p><strong>问题:</strong></p><p>!<img src="https://s3.bmp.ovh/imgs/2022/10/07/478c5f93e511d314.png"></p><p>答: 不会</p><blockquote><p>解析:</p><p> 当电压信号ui加到A点时，A点电位改变，而二极管管压降（几乎）不变，故G点电位改变。</p><p>因此，信号从A点传送到G点，不会被阻拦下来</p></blockquote><p>仿真实验:</p><p>(1)、闭合S2二极管上方<strong>A</strong>点电位无法改变，只有电源的12V</p><p><img src="https://s3.bmp.ovh/imgs/2022/10/07/446693f8a156a37d.png"></p><p>(2)、打开S2，关闭S3。可见交流信号已经加到<strong>A</strong>点</p><p><img src="https://s3.bmp.ovh/imgs/2022/10/07/990a3553e4ba5acc.png"></p><p>(3)、S4的闭合对<strong>A</strong>点电位的影响</p><blockquote><p>S4闭合前<strong>B</strong>和GND两点之间分压能力强，<strong>B</strong>点电位高，因而加上交流信号后<strong>A</strong>点峰值更高。</p><p>S4闭合后，<strong>B</strong>和GND两点之间（几乎）没有分压能力，<strong>B</strong>点电位为0（加交流以前），因而加上交流信号后<strong>A</strong>点峰值较低。</p></blockquote><p><img src="https://s3.bmp.ovh/imgs/2022/10/07/a5f566183f62edf3.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 模电 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 模电 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>51单片机88LED流动动画左移量设置</title>
+      <link href="/2022/09/23/51-dan-pian-ji-88led-liu-dong-dong-hua-zuo-yi-liang-she-zhi/"/>
+      <url>/2022/09/23/51-dan-pian-ji-88led-liu-dong-dong-hua-zuo-yi-liang-she-zhi/</url>
+      
+        <content type="html"><![CDATA[<center>51单片机8*8LED流动动画左移量设置</center><p><img src="https://s3.bmp.ovh/imgs/2022/09/23/b64fcc3dd899f345.png"></p><p>第一幅8*8可显示第一幅画面，上图中第一幅后有八列</p><p>左移八次即可</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">void main()&#123;unsigned char i;Timer0_Init();MatrixLED_Init();while(1)&#123;for(i &#x3D; 0;i &lt; 8;i++)&#123;MatrixLED_ShowColumn(i,show[i + left]);&#125;if(left &gt; 8)left &#x3D; 0;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>if(left &gt; 8)left &#x3D; 0;</strong></p><p><strong>附:</strong></p><p>左移时间控制可用定时器</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">void Timer0_Routine() interrupt 1&#123;static unsigned int T0Count;TL0 &#x3D; 0x66;&#x2F;&#x2F;设置定时初始值TH0 &#x3D; 0xFC;&#x2F;&#x2F;设置定时初始值T0Count++;if(T0Count&gt;&#x3D;1000)&#x2F;&#x2F;一秒&#123;left++;T0Count &#x3D; 0;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 51MCU </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 单片机 </tag>
+            
+            <tag> 8*8LED </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>51单片机中断与计时器</title>
+      <link href="/2022/09/11/51-dan-pian-ji-zhong-duan-yu-ji-shi-qi/"/>
+      <url>/2022/09/11/51-dan-pian-ji-zhong-duan-yu-ji-shi-qi/</url>
+      
+        <content type="html"><![CDATA[<center>51单片机中断与计时器</center><!-- toc --><ul><li><a href="#%E4%B8%80-%E5%AE%9A%E6%97%B6%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96">一、定时器初始化</a><ul><li><a href="#1-%E9%85%8D%E7%BD%AE%E4%B8%8B%E5%9B%BE%E4%B8%AD%E5%90%84%E5%AF%84%E5%AD%98%E5%99%A8">1、配置下图中各寄存器</a><ul><li><a href="#1-%E5%AE%9A%E6%97%B6%E5%99%A8%E8%AE%A1%E6%95%B0%E5%99%A8%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8tcon">1. 定时器&#x2F;计数器控制寄存器TCON</a></li><li><a href="#2%E5%AE%9A%E6%97%B6%E5%99%A8-%E8%AE%A1%E6%95%B0%E5%99%A8%E6%A8%A1%E5%BC%8F%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8tmod">2.定时器、计数器模式控制寄存器TMOD</a></li><li><a href="#3th0%E5%8F%8Atl0"><strong>3.TH0及TL0</strong></a></li></ul></li><li><a href="#2-%E4%B8%AD%E6%96%AD%E8%AE%BE%E7%BD%AE">2、中断设置</a></li></ul></li><li><a href="#%E4%BA%8C-%E4%B8%AD%E6%96%AD%E7%A8%8B%E5%BA%8F">二、中断程序</a></li></ul><!-- tocstop --><h1><span id="一-定时器初始化">一、定时器初始化</span></h1><h2><span id="1-配置下图中各寄存器">1、配置下图中各寄存器</span></h2><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/18bb27683d63a396.png"></p><h3><span id="1-定时器x2f计数器控制寄存器tcon">1. 定时器&#x2F;计数器控制寄存器TCON</span></h3><p>​       该寄存器可以进行位寻址。TCON寄存器用来控制定时器的启、停，标志定时器的溢出和中断情况。单片机复位时TCON全部清0。这个寄存器的给位定义如下表所示。其中TF1、TR1、TF0和TR0位用于定时器&#x2F;计数器的设置。（IE1、IT1、IE0和IT0位用于外部中断的设置。【暂时不需要了解，且现在只单了解TF0、TR0即可】）</p><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/8f152334db9b4779.png"></p><blockquote><p>TF0—定时器0溢出标志位</p><p>TR0—定时器0运行控制位</p></blockquote><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/7a0a5eb360674cfc.png"></p><p><strong>TF0和TRO设置在文章后面有快速方法</strong>  </p><h3><span id="2定时器-计数器模式控制寄存器tmod">2.定时器、计数器模式控制寄存器TMOD</span></h3><blockquote><p>TMOD：</p><p>TMOD是定时器、计数器模式控制寄存器（TIMER&#x2F;COUNTER MODE CONTROL REGISTER）</p></blockquote><p>不能位寻址，TMOD用来确定定时器T0和T1的工作方式及功能选择，单片机复位时，TMOD全部被清0，TMOD寄存器的定义如下。</p><p> 定时器&#x2F;计数器工作方式寄存器TMOD</p><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/30d969beb71ca830.jpeg">这个寄存器的高4位用来设置定时器T1，低4位用来设置定时器T0。</p><p><strong>M1:M0—工作方式选择位</strong></p><p>  每个定时器&#x2F;计数器由4中工作方式，他们由M1和M0设定，对应关系如下表所示。</p><p> 定时器&#x2F;计数器的4种工作方式</p><table><thead><tr><th>M1</th><th>M0</th><th>工作方式</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>方式0：13位定时器&#x2F;计数器</td></tr><tr><td>0</td><td>1</td><td>方式1：16位定时器&#x2F;计数器       <strong>(常用)</strong></td></tr><tr><td>1</td><td>0</td><td>方式2：8位初始值自动重置的8位定时器&#x2F;计数器</td></tr><tr><td>1</td><td>1</td><td>方式3：仅适用于T0，分成两个8位计数器，T1停止计数</td></tr></tbody></table><p>模式0(13位定时器&#x2F;计数器)<strong>（很少用）</strong></p><p>将定时器设置成模式0时类似8048定时器，即8位计数器带32分频的预分频器。下图所示</p><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/17090589d894b9fb.png"></p><p><strong>模式1</strong></p><p><img src="https://s3.bmp.ovh/imgs/2022/09/10/9615412cd8b74505.png"></p><p>（本不想放模式0的，但我发现我模式1的笔记记模式0上了，哈哈）</p><p><strong>TMOD设置在文章后面有快速方法</strong> </p><h3><span id="3th0及tl0"><strong>3.TH0及TL0</strong></span></h3><p>TH0和TL0是用于设置定时初始值，让每次定时器记我们想要的特定时间，设置方法可在STC-ISP中快捷、准确的复制（哈哈，有现成的）</p><p><strong>前文讲到的快速方法：</strong></p><p><img src="https://s3.bmp.ovh/imgs/2022/09/10/5e8141b3e9381ccb.png"></p><h2><span id="2-中断设置">2、中断设置</span></h2><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/45c04bf74544d709.png"></p><p><strong>最后的定时器初始化程序：</strong></p><p><img src="https://s3.bmp.ovh/imgs/2022/09/11/b736b0d98ac9ab82.png"></p><pre class="line-numbers language-c" data-language="c"><code class="language-c">void Timer0_Init()&#x2F;&#x2F;1毫秒@11.0592MHz&#123;TMOD &amp;&#x3D; 0xF0;&#x2F;&#x2F;设置定时器模式TMOD |&#x3D; 0x01;&#x2F;&#x2F;设置定时器模式TL0 &#x3D; 0x66;&#x2F;&#x2F;设置定时初始值TH0 &#x3D; 0xFC;&#x2F;&#x2F;设置定时初始值TF0 &#x3D; 0;&#x2F;&#x2F;清除TF0标志TR0 &#x3D; 1;&#x2F;&#x2F;定时器0开始计时ET0 &#x3D; 1;EA  &#x3D; 1;PT0 &#x3D; 0;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h1><span id="二-中断程序">二、中断程序</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/09/09/1571ecfc1c008d1f.png"></p><p><strong>例子一：</strong></p><p>每隔一秒P2_0控制的LED亮一次</p><p><img src="https://s3.bmp.ovh/imgs/2022/09/11/68455ea5e0dce490.png"></p><p><strong>例子二：</strong></p><p>按键控制流水灯模式，按下（同一个个按键，P3_1）按键,流水灯转换流动方向</p><p>main.c</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;REGX52.H&gt;#include &lt;Timer0.H&gt;#include &lt;Key.H&gt;int LedMode;void main()&#123;Timer0_Init();while(1)&#123;LedMode &#x3D; Key();&#125;&#125; int i &#x3D; 0;void Timer0_Routine() interrupt 1&#123;char LedMode1[] &#x3D;&#123;0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f&#125;;static Timer0Count;Timer0Count++;if(Timer0Count &#x3D;&#x3D; 1000)&#123;P2 &#x3D; LedMode1[i];if (LedMode &#x3D;&#x3D; 0)&#123;i++;if(i &gt;&#x3D; 8 )&#123;i &#x3D; 0;&#125;&#125;if (LedMode &#x3D;&#x3D; 1)&#123;i--;if(i &lt;&#x3D; -1 )&#123;i &#x3D; 7;&#125;&#125;Timer0Count &#x3D;0;&#125;TL0 &#x3D; 0x66;&#x2F;&#x2F;设置定时初始值TH0 &#x3D; 0xFC;&#x2F;&#x2F;设置定时初始值&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>Key.c</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;REGX52.H&gt;#include &lt;delay.H&gt; int KeyNumber &#x3D; 0;int Key()&#123;if (P3_1 &#x3D;&#x3D; 0)&#123;delay(20);while(P3_1 &#x3D;&#x3D; 0);delay(20);KeyNumber &#x3D; ~KeyNumber;if(KeyNumber &#x3D;&#x3D; -1)&#123;KeyNumber &#x3D; 1;&#125;if(KeyNumber &#x3D;&#x3D; -2)&#123;KeyNumber &#x3D; 0;&#125;&#125;return KeyNumber;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>Timer0.c</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;REGX52.H&gt;void Timer0_Init()&#x2F;&#x2F;1毫秒@11.0592MHz&#123;TMOD &amp;&#x3D; 0xF0;&#x2F;&#x2F;设置定时器模式TMOD |&#x3D; 0x01;&#x2F;&#x2F;设置定时器模式TL0 &#x3D; 0x66;&#x2F;&#x2F;设置定时初始值TH0 &#x3D; 0xFC;&#x2F;&#x2F;设置定时初始值TF0 &#x3D; 0;&#x2F;&#x2F;清除TF0标志TR0 &#x3D; 1;&#x2F;&#x2F;定时器0开始计时ET0 &#x3D; 1;EA  &#x3D; 1;PT0 &#x3D; 0;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>delay.c</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">void delay(int x)    &#x2F;&#x2F;0.001 s&#123;unsigned char i, j;for (;x &gt; 0;x--)&#123;i &#x3D; 2;j &#x3D; 119;do&#123;while (--j);&#125; while (--i);;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>.h文件不再一一列出，只列出Key.h，其余格式一样</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">#ifndef __KEY_H__#define __KEY_H__int Key(void);#endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><strong>例子二全部文件列表：</strong></p><p><img src="https://s3.bmp.ovh/imgs/2022/09/11/ce7e8522489344d0.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 51MCU </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 单片机 </tag>
+            
+            <tag> 中断与计时器 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java</title>
+      <link href="/2022/07/26/java/"/>
+      <url>/2022/07/26/java/</url>
+      
+        <content type="html"><![CDATA[<center>Java</center><h1><span id="一-基础概念">一、基础概念</span></h1><p>1、关键字全小写</p><p>2、关于”制表符—‘\t’—“</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/26/df5d1df3a01b8219.png"></p><p>3、不同进制在代码中的表现</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/26/ed00ecd8ce12b56d.png"></p><p>4、基本数据类型</p><p><strong>如果定义long、float类型的变量</strong></p><p>在数据值的后面加一个L、F作为后缀</p><p>可大写可小写（建议大写）</p><p>如：999999999L、10.1F</p><p><strong>java中的布尔类型是boolean</strong></p><p>5、命名</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/2fadaf08a6a42a8c.png"></p><p>6、IDEA</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/5fb4c3a3814ab966.png"></p><p>7、隐式转换</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/c42757feee06ef23.png"></p><p>8、字符串“+”</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/acea215a28553eec.png"></p><p>9、字符+</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/20bac4452582f03e.png"></p><p>10、赋值</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/680a855cdf386c62.png"></p><p>强转为等号左边类型</p><p>11、jdk-12中switch新用法</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/47559194e4ecd6b0.png"></p><p><strong>只有一句语句时大括号可省</strong></p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/e9fa37015c67ce55.png"></p><p>12、快速遍历i数组</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/27/d3ab898ef10ea6e2.png"></p><h1><span id="二-面向对象">二、面向对象</span></h1><p>1、封装</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/28/9bb6621f3fb446a9.png"></p><p>2、构造方法</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/28/3259249cd60c7f1c.png"></p><p><img src="https://s3.bmp.ovh/imgs/2022/07/28/401e1528e5db6dba.png"></p><p>3、this内存原理</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/28/172463f58b90aba5.png"></p><p>4、Scanner</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/29/39f915e22a4a403a.png"></p><p>5、字符串–String</p><p><img src="https://s3.bmp.ovh/imgs/2022/07/29/6b08bdf91b6432f0.png"></p><p><img src="https://s3.bmp.ovh/imgs/2022/07/29/3972707ccf94bc10.png"></p><p><img src="https://s3.bmp.ovh/imgs/2022/07/29/765e9ba1346c563a.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>数据结构和算法</title>
+      <link href="/2022/06/28/shu-ju-jie-gou-he-suan-fa/"/>
+      <url>/2022/06/28/shu-ju-jie-gou-he-suan-fa/</url>
+      
+        <content type="html"><![CDATA[<center>数据结构和算法</center><h1><span id="一-算法效率的度量方法">一、算法效率的度量方法</span></h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构和算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构和算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C陷阱与缺陷</title>
+      <link href="/2022/06/14/c-xian-jing-yu-que-xian/"/>
+      <url>/2022/06/14/c-xian-jing-yu-que-xian/</url>
+      
+        <content type="html"><![CDATA[<center>C陷阱与缺陷</center><!-- toc --><ul><li><a href="#%E4%B8%80-%E5%8D%95%E5%BC%95%E5%8F%B7%E5%92%8C%E5%8F%8C%E5%BC%95%E5%8F%B7">一、单引号和双引号</a></li></ul><!-- tocstop --><h1><span id="一-单引号和双引号">一、单引号和双引号</span></h1><blockquote><p>用单引号引起的一个字符实际上代表一个整数</p><p>用双引号引起的字符串，代表的却是一个指向无名数组起始字符的指针，该数组被引号之间的字符以及一个额外的二进制值为零的字符串’\0’初始化</p></blockquote><blockquote><p>整数型的储存空间可以容纳多个字符（一般为八位），因此有的C编译器允许在一个字符常量（以及字符串常量）中包括多个字符。也就是说，用’yes’,代替”yes”不会被编译器检测到。”yes”的含义是依次包含’y’,’e’,’s’以及空字符’\0’的四个连续内存单元的首地址。’yes’的含义并没有准确地进行定义，在Visual C++6.0中采用的方法是，依次用后一个字符覆盖前一个字符，最后得到的整数值即最后一个字符的整数值。</p></blockquote><p><img src="https://s3.bmp.ovh/imgs/2022/06/14/5fdc5d664b3c7ccc.png"></p><p><img src="https://s3.bmp.ovh/imgs/2022/06/14/ad5d45674a25bb8c.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Mysql学习笔记</title>
+      <link href="/2022/05/26/mysql-xue-xi-bi-ji/"/>
+      <url>/2022/05/26/mysql-xue-xi-bi-ji/</url>
+      
+        <content type="html"><![CDATA[<center>Mysql学习笔记</center><!-- toc --><ul><li><a href="#11-ddl-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C">1.1 DDL – 数据库操作</a><ul><li><a href="#1%E6%9F%A5%E8%AF%A2">（1）查询</a><ul><li><a href="#1%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE%E5%BA%93">【1】查询所有数据库</a></li><li><a href="#2%E6%9F%A5%E8%AF%A2%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93">【2】查询当前数据库</a></li></ul></li><li><a href="#2%E5%88%9B%E5%BB%BA">（2）创建</a></li><li><a href="#3%E5%88%A0%E9%99%A4">（3）删除</a></li><li><a href="#4%E4%BD%BF%E7%94%A8">（4）使用</a></li></ul></li><li><a href="#12-ddl-%E8%A1%A8%E6%93%8D%E4%BD%9C-%E5%88%9B%E5%BB%BA">1.2 DDL–表操作–创建</a></li><li><a href="#13-ddl-%E8%A1%A8%E6%93%8D%E4%BD%9C-%E6%9F%A5%E8%AF%A2">1.3 DDL–表操作–查询</a><ul><li><a href="#1%E6%9F%A5%E8%AF%A2%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%80%E6%9C%89%E8%A1%A8">（1）查询当前数据库所有表</a></li><li><a href="#2%E6%9F%A5%E8%AF%A2%E8%A1%A8%E7%BB%93%E6%9E%84">（2）查询表结构</a></li><li><a href="#3%E6%9F%A5%E8%AF%A2%E6%8C%87%E5%AE%9A%E8%A1%A8%E7%9A%84%E5%BB%BA%E8%A1%A8%E8%AF%AD%E5%8F%A5">（3）查询指定表的建表语句</a></li></ul></li></ul><!-- tocstop --><h1><span id="11-ddl-数据库操作">1.1 DDL – 数据库操作</span></h1><h2><span id="1查询">（1）查询</span></h2><h3><span id="1查询所有数据库">【1】查询所有数据库</span></h3><p>​        show databases;</p><h3><span id="2查询当前数据库">【2】查询当前数据库</span></h3><p>​        select database();</p><h2><span id="2创建">（2）创建</span></h2><p>​    create database 【if not exists】数据库名【default charset字符集】【collate排序规矩】；</p><h2><span id="3删除">（3）删除</span></h2><p>​    drop databases【if exists】数据库名；</p><h2><span id="4使用">（4）使用</span></h2><p>​    ues 数据库名；</p><h1><span id="12-ddl表操作创建">1.2 DDL–表操作–创建</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/05/26/d1e29f832f26e9e6.png"></p><h1><span id="13-ddl表操作查询">1.3 DDL–表操作–查询</span></h1><h2><span id="1查询当前数据库所有表">（1）查询当前数据库所有表</span></h2><p>​    show tables；</p><h2><span id="2查询表结构">（2）查询表结构</span></h2><p>​    desc表名；</p><h2><span id="3查询指定表的建表语句">（3）查询指定表的建表语句</span></h2><p>​    show create table 表名；</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Mysql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Mysql使用 </tag>
+            
+            <tag> Mysql学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python查看WiFi密码</title>
+      <link href="/2022/05/11/python-cha-kan-wifi-mi-ma/"/>
+      <url>/2022/05/11/python-cha-kan-wifi-mi-ma/</url>
+      
+        <content type="html"><![CDATA[<center>python查看WiFi密码</center><p>一</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">from os import popenfrom re import search, findallfrom time import sleep def show_saved():    s &#x3D; popen(&#39;netsh wlan show profiles&#39;).read()    ssids &#x3D; findall(r&#39;所有用户配置文件 : (.*)\n&#39;, s)    return ssidsdef show_pwd(ssid):    s &#x3D; popen(f&#39;netsh wlan show profiles &quot;&#123;ssid&#125;&quot; key&#x3D;clear&#39;).read()    try: pwd &#x3D; search(r&#39;关键内容( *): (.*)&#39;, s).groups()[1]    except: pwd &#x3D; &#39;NOT FOUND!&#39;    # return pwd    print(ssid+&quot;的密码是：&quot;+pwd)    print()    print() if __name__ &#x3D;&#x3D; &#39;__main__&#39;:    print(&#39;Input ssid to show its password, or input &quot;&#x2F;exit&quot; to exit.\n&#39;)    print(&#39;All saved wifi ssids: &#39;)    ssids &#x3D; show_saved()    print(&quot;》》所有wifi密码列表：《《&quot;)    for ssid in ssids:         print(&#39;  &#39; + ssid)        show_pwd(ssid)    # while True:    #     query &#x3D; input(&#39;&gt;&#39;)    #     if query &#x3D;&#x3D; &#39;&#x2F;exit&#39;: break    #     print(show_pwd(query))    # print(&#39;Exit...&#39;)    # sleep(0.3)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>二</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">import subprocess# 获取wifi列表output &#x3D; subprocess.run([&#39;netsh&#39;,&#39;wlan&#39;,&#39;show&#39;,&#39;profiles&#39;],capture_output &#x3D; True).stdout.decode(&#39;gbk&#39;).split(&#39;\n&#39;)wifis &#x3D; [line.split(&#39;:&#39;)[1][1:-1] for line in output if &quot;所有用户配置文件&quot; in line]#查看每个wifi对应的密码for wifi in wifis:    results &#x3D; subprocess.run([&#39;netsh&#39;,&#39;wlan&#39;,&#39;show&#39;,&#39;profile&#39;,wifi,&#39;key&#x3D;clear&#39;],capture_output &#x3D; True).stdout.decode(&#39;gbk&#39;,errors &#x3D; &#39;ignore&#39;).split(&#39;\n&#39;)    results &#x3D; [line.split(&#39;:&#39;)[1][1:-1] for line in results if &quot;关键内容&quot; in line]    try:        print(f&#39;wifi名：&#123;wifi&#125;，密码:&#123;results[0]&#125;&#39;)    except IndexError:        print(f&#39;wifi名：&#123;wifi&#125;，密码:无法提取&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python自动化</title>
+      <link href="/2022/05/10/python-zi-dong-hua/"/>
+      <url>/2022/05/10/python-zi-dong-hua/</url>
+      
+        <content type="html"><![CDATA[<center>python自动化</center><p><strong>以下内容可实现鼠标、滑轮、热键自动工作</strong></p><h1><span id="1-表格区">1、表格区</span></h1><table><thead><tr><th>指令类型：     1 单击 2 双击 3 右键   4 输入 5 等待 6滚轮      7热键组合 8粘贴当前时间(B列必须填写:当前时间)     9 windows CMD命令模式</th><th>内容：     图片名称(不能为中文).png、输入内容（实为复制粘贴）     等待时长&#x2F;秒、滚轮距离（如-200，即为往下滚）     当前时间、windows CMD命令</th><th>重复次数     (-1代表一直重复)</th><th>备注</th></tr></thead><tbody><tr><td>9</td><td>start notepad</td><td></td><td></td></tr><tr><td>5</td><td>0.5</td><td></td><td></td></tr><tr><td>4</td><td>hello world!!</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>4</td><td>具体热键组合使用方法打开xls文件看“”热键组合使用明说”,注意sheet1备注红色部分的提示。</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>4</td><td>热键组合下     单个数字最后一定要写英语半角逗号“,”</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>7</td><td>1,</td><td></td><td>热键组合下     单个数字最后一定要写英语半角逗号“,”</td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>4</td><td>热键组合下     支持多按混搭，每个按键用英语半角逗号“,”分开，如果输入非个位数，每一位数字都用号“,”分开。     (比如：100，就是1,0,0,)</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>7</td><td>1,space,2,space,3,space,4,space,5,space,6,space,7,space,8,space,9,space,1,0,space,1,1,space,1,2,space,1,3,space,1,4,space,1,5,space,1,6,space,1,7,space,1,8,space,1,9,space,2,0,space,</td><td></td><td>热键组合下     支持多按混搭，每个按键用英语半角逗号“,”分开，如果输入非个位数，每一位数字都用号“,”分开。     (比如：100，就是1,0,0,)</td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>5</td><td>0.5</td><td></td><td></td></tr><tr><td>4</td><td>下面展示调windows CMD命令，并关闭。</td><td></td><td></td></tr><tr><td>5</td><td>1</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>9</td><td>start cmd</td><td></td><td>用命令打开CMD</td></tr><tr><td>5</td><td>1</td><td></td><td></td></tr><tr><td>7</td><td>e,x,i,t</td><td></td><td>关闭CMD窗口</td></tr><tr><td>5</td><td>1</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td></td><td></td></tr><tr><td>4</td><td>下面静默使用CMD运行 start c: 打开C盘。然后关闭</td><td></td><td></td></tr><tr><td>5</td><td>1</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>9</td><td>start c:</td><td></td><td>直接执行CMD的start C:命令打开C盘</td></tr><tr><td>5</td><td>0.5</td><td></td><td></td></tr><tr><td>7</td><td>alt,F4</td><td></td><td>关闭C盘</td></tr><tr><td>8</td><td>当前时间</td><td></td><td></td></tr><tr><td>7</td><td>enter</td><td>2</td><td></td></tr><tr><td>4</td><td>演示结束</td><td></td><td></td></tr></tbody></table><h1><span id="2-代码区">2、代码区</span></h1><pre class="line-numbers language-python" data-language="python"><code class="language-python">import pyautoguiimport timeimport xlrdimport pyperclipimport timeimport os#定义鼠标事件#pyautogui库其他用法 https:&#x2F;&#x2F;blog.csdn.net&#x2F;qingfengxd1&#x2F;article&#x2F;details&#x2F;108270159def mouseClick(clickTimes,lOrR,img,reTry):    if reTry &#x3D;&#x3D; 1:        while True:            location&#x3D;pyautogui.locateCenterOnScreen(img,confidence&#x3D;0.9)            if location is not None:                pyautogui.click(location.x,location.y,clicks&#x3D;clickTimes,interval&#x3D;0.2,duration&#x3D;0.2,button&#x3D;lOrR)                break            print(&quot;未找到匹配图片,0.1秒后重试&quot;)            time.sleep(0.1)    elif reTry &#x3D;&#x3D; -1:        while True:            location&#x3D;pyautogui.locateCenterOnScreen(img,confidence&#x3D;0.9)            if location is not None:                pyautogui.click(location.x,location.y,clicks&#x3D;clickTimes,interval&#x3D;0.2,duration&#x3D;0.2,button&#x3D;lOrR)            time.sleep(0.1)    elif reTry &gt; 1:        i &#x3D; 1        while i &lt; reTry + 1:            location&#x3D;pyautogui.locateCenterOnScreen(img,confidence&#x3D;0.9)            if location is not None:                pyautogui.click(location.x,location.y,clicks&#x3D;clickTimes,interval&#x3D;0.2,duration&#x3D;0.2,button&#x3D;lOrR)                print(&quot;重复&quot;)                i +&#x3D; 1            time.sleep(0.1)#定义热键事件#hotkey_get方法用来判断热键组合个数,还是文字输入。此方法由B站up主 尔茄无双 提供。def hotkey_get(hk_g_inputValue):    try:        newinput &#x3D; hk_g_inputValue.split(&#39;,&#39;)        pyautogui.hotkey(*tuple(newinput))    except:        pyperclip.copy(hk_g_inputValue)        pyautogui.hotkey(&#39;ctrl&#39;, &#39;v&#39;)#hotkey_get方法用来判断热键组合个数，并把热键传到对应的变量上newinput[0],[1],[2],[3]……[9]只写了10个后续可以添加。【老方法弃用】    # newinput &#x3D; hk_g_inputValue.split(&#39;,&#39;)    #         if len(newinput)&#x3D;&#x3D;1:     #         pyautogui.hotkey(hk_g_inputValue)    #         elif len(newinput)&#x3D;&#x3D;2:    #         pyautogui.hotkey(newinput[0],newinput[1])    #         elif len(newinput)&#x3D;&#x3D;3:    #         pyautogui.hotkey(newinput[0],newinput[1],newinput[2])    #         elif len(newinput)&#x3D;&#x3D;4:    #         pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3])    #         elif len(newinput)&#x3D;&#x3D;4:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3])    #         elif len(newinput)&#x3D;&#x3D;5:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3],newinput[4])    #         elif len(newinput)&#x3D;&#x3D;6:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3],newinput[4],newinput[5])    #         elif len(newinput)&#x3D;&#x3D;7:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3],newinput[4],newinput[5],newinput[6])           #         elif len(newinput)&#x3D;&#x3D;8:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3],newinput[4],newinput[5],newinput[6],newinput[7])         #         elif len(newinput)&#x3D;&#x3D;9:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3],newinput[4],newinput[5],newinput[6],newinput[7],newinput[8])    #         elif len(newinput)&#x3D;&#x3D;10:    #             pyautogui.hotkey(newinput[0],newinput[1],newinput[2],newinput[3],newinput[4],newinput[5],newinput[6],newinput[7],newinput[8],newinput[9])                                                                                                                                                            #hotkey_Group方法调用hotkey_get方法，并判断其热键内容是否需要循环。def hotkeyGroup(reTry,hkg_inputValue):    if reTry &#x3D;&#x3D; 1:            hotkey_get(hkg_inputValue)                              print(&quot;执行了：&quot;,hkg_inputValue)            time.sleep(0.1)    elif reTry &#x3D;&#x3D; -1:        while True:            hotkey_get(hkg_inputValue)            print(&quot;执行了：&quot;,hkg_inputValue)            time.sleep(0.1)    elif reTry &gt; 1:        i &#x3D; 1        while i &lt; reTry + 1:                hotkey_get(hkg_inputValue)                print(&quot;执行了：&quot;,hkg_inputValue)                i +&#x3D; 1                time.sleep(0.1)# 数据检查# cmdType.value  1.0 左键单击    2.0 左键双击  3.0 右键单击  4.0 输入  5.0 等待  6.0 滚轮  # 7.0 热键组合（最多4个）# 8.0 粘贴当前时间# 9.0 系统命令集# ctype     空：0#           字符串：1#           数字：2#           日期：3#           布尔：4#           error：5def dataCheck(sheet1):    checkCmd &#x3D; True    #行数检查    if sheet1.nrows&lt;2:        print(&quot;没数据啊哥&quot;)        checkCmd &#x3D; False    #每行数据检查    i &#x3D; 1    while i &lt; sheet1.nrows:        # 第1列 操作类型检查        cmdType &#x3D; sheet1.row(i)[0]        if cmdType.ctype !&#x3D; 2 or (cmdType.value !&#x3D; 1.0 and cmdType.value !&#x3D; 2.0 and cmdType.value !&#x3D; 3.0         and cmdType.value !&#x3D; 4.0 and cmdType.value !&#x3D; 5.0 and cmdType.value !&#x3D; 6.0         and cmdType.value !&#x3D; 7.0 and cmdType.value !&#x3D; 8.0 and cmdType.value !&#x3D; 9.0):            print(&#39;第&#39;,i+1,&quot;行,第1列数据有毛病&quot;)            checkCmd &#x3D; False        # 第2列 内容检查        cmdValue &#x3D; sheet1.row(i)[1]        # 读图点击类型指令，内容必须为字符串类型        if cmdType.value &#x3D;&#x3D;1.0 or cmdType.value &#x3D;&#x3D; 2.0 or cmdType.value &#x3D;&#x3D; 3.0:            if cmdValue.ctype !&#x3D; 1:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        # 输入类型，内容不能为空        if cmdType.value &#x3D;&#x3D; 4.0:            if cmdValue.ctype &#x3D;&#x3D; 0:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        # 等待类型，内容必须为数字        if cmdType.value &#x3D;&#x3D; 5.0:            if cmdValue.ctype !&#x3D; 2:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        # 滚轮事件，内容必须为数字        if cmdType.value &#x3D;&#x3D; 6.0:            if cmdValue.ctype !&#x3D; 2:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        # 7.0 热键组合，内容不能为空        if cmdType.value &#x3D;&#x3D; 7.0:            if cmdValue.ctype &#x3D;&#x3D; 0:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        # 8.0 时间，内容不能为空        if cmdType.value &#x3D;&#x3D; 8.0:            if cmdValue.ctype &#x3D;&#x3D; 0:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        # 9.0 系统命令集模式，内容不能为空        if cmdType.value &#x3D;&#x3D; 9.0:            if cmdValue.ctype &#x3D;&#x3D; 0:                print(&#39;第&#39;,i+1,&quot;行,第2列数据有毛病&quot;)                checkCmd &#x3D; False        i +&#x3D; 1    return checkCmd#任务def mainWork(img):    i &#x3D; 1    while i &lt; sheet1.nrows:        #取本行指令的操作类型        cmdType &#x3D; sheet1.row(i)[0]        if cmdType.value &#x3D;&#x3D; 1.0:            #取图片名称            img &#x3D; sheet1.row(i)[1].value            reTry &#x3D; 1            if sheet1.row(i)[2].ctype &#x3D;&#x3D; 2 and sheet1.row(i)[2].value !&#x3D; 0:                reTry &#x3D; sheet1.row(i)[2].value            mouseClick(1,&quot;left&quot;,img,reTry)            print(&quot;单击左键&quot;,img)        #2代表双击左键        elif cmdType.value &#x3D;&#x3D; 2.0:            #取图片名称            img &#x3D; sheet1.row(i)[1].value            #取重试次数            reTry &#x3D; 1            if sheet1.row(i)[2].ctype &#x3D;&#x3D; 2 and sheet1.row(i)[2].value !&#x3D; 0:                reTry &#x3D; sheet1.row(i)[2].value            mouseClick(2,&quot;left&quot;,img,reTry)            print(&quot;双击左键&quot;,img)        #3代表右键        elif cmdType.value &#x3D;&#x3D; 3.0:            #取图片名称            img &#x3D; sheet1.row(i)[1].value            #取重试次数            reTry &#x3D; 1            if sheet1.row(i)[2].ctype &#x3D;&#x3D; 2 and sheet1.row(i)[2].value !&#x3D; 0:                reTry &#x3D; sheet1.row(i)[2].value            mouseClick(1,&quot;right&quot;,img,reTry)            print(&quot;右键&quot;,img)         #4代表输入        elif cmdType.value &#x3D;&#x3D; 4.0:            inputValue &#x3D; sheet1.row(i)[1].value            pyperclip.copy(inputValue)            pyautogui.hotkey(&#39;ctrl&#39;,&#39;v&#39;)            print(&quot;输入:&quot;,inputValue)             time.sleep(0.5)                                               #5代表等待        elif cmdType.value &#x3D;&#x3D; 5.0:            #取图片名称            waitTime &#x3D; sheet1.row(i)[1].value            time.sleep(waitTime)            print(&quot;等待&quot;,waitTime,&quot;秒&quot;)        #6代表滚轮        elif cmdType.value &#x3D;&#x3D; 6.0:            #取图片名称            scroll &#x3D; sheet1.row(i)[1].value            pyautogui.scroll(int(scroll))            print(&quot;滚轮滑动&quot;,int(scroll),&quot;距离&quot;)            #7代表_热键组合        elif cmdType.value &#x3D;&#x3D; 7.0:            #取重试次数,并循环。            reTry &#x3D; 1            if sheet1.row(i)[2].ctype &#x3D;&#x3D; 2 and sheet1.row(i)[2].value !&#x3D; 0:                reTry &#x3D; sheet1.row(i)[2].value            inputValue &#x3D; sheet1.row(i)[1].value            hotkeyGroup(reTry,inputValue)            time.sleep(0.5)       #8代表_粘贴当前时间        elif cmdType.value &#x3D;&#x3D; 8.0:                  #设置本机当前时间。            localtime &#x3D; time.strftime(&quot;%Y-%m-%d %H：%M：%S&quot;, time.localtime())             pyperclip.copy(localtime)            pyautogui.hotkey(&#39;ctrl&#39;,&#39;v&#39;)            print(&quot;粘贴了本机时间:&quot;,localtime)            time.sleep(0.5)       #9代表_系统命令集模式        elif cmdType.value &#x3D;&#x3D; 9.0:                  wincmd &#x3D; sheet1.row(i)[1].value            os.system(wincmd)            print(&quot;运行系统命令:&quot;,wincmd)            time.sleep(0.5)         i +&#x3D; 1#主程序while True:    if __name__ &#x3D;&#x3D; &#39;__main__&#39;:        file &#x3D; &#39;cmd.xls&#39;        #打开文件        wb &#x3D; xlrd.open_workbook(filename&#x3D;file)        #通过索引获取表格sheet页        sheet1 &#x3D; wb.sheet_by_index(0)        print(&#39;&#39;)        #避免多次循环导致的ctrl+v导入到，按ESC进行取消。        pyautogui.hotkey(&#39;esc&#39;)        #数据检查        checkCmd &#x3D; dataCheck(sheet1)        #输入选项实现功能        if checkCmd:            key&#x3D;input(&#39;选择功能: 1.做一次 2.循环几次 3.循环到死 0.退出程序\n特殊功能：c.清理屏幕显示\n———————————————————————————————————————\n&#39;)            if key&#x3D;&#x3D;&#39;1&#39;:                #循环拿出每一行指令                 print(&quot;正在执行第1次命令&quot;)                  print(&quot;&quot;)                mainWork(sheet1)                print(&quot;&quot;)                print(&quot;已经完成第1次命令&quot;)                  print(&quot;——————————————————分割线——————————————————&quot;)                  print(&quot;&quot;)            elif key&#x3D;&#x3D;&#39;2&#39;:                print(&quot;&quot;)                count&#x3D;0                times&#x3D;input(&#39;输入需要循环的次数，务必输入正整数。\n&#39;)                times&#x3D;int(times)                if count &lt; times:                    while count &lt; times:                            count+&#x3D;1                             print(&quot;正在执行第&quot;,count,&quot;次&quot;,&quot;命令&quot;)                            print(&quot;&quot;)                            mainWork(sheet1)                            time.sleep(0.1)                            print(&quot;等待0.1秒&quot;)                             print(&quot;&quot;)                             print(&quot;已经完成第&quot;,count,&quot;次&quot;,&quot;命令&quot;)                             print(&quot;——————————————————分割线——————————————————&quot;)                              print(&quot;&quot;)                 else:                    print(&#39;输入有误或者已经退出!&#39;)                    os.system(&#39;pause&#39;)                    print(&quot;&quot;)                     print(&quot;——————————————————————————————————————————&quot;)              elif key&#x3D;&#x3D;&#39;3&#39;:                count&#x3D;0                while True:                    count+&#x3D;1                    print(&quot;正在执行第&quot;,count,&quot;次&quot;,&quot;命令&quot;)                    print(&quot;&quot;)                    mainWork(sheet1)                    time.sleep(0.1)                    print(&quot;等待0.1秒&quot;)                      print(&quot;&quot;)                    print(&quot;已经完成第&quot;,count,&quot;次&quot;,&quot;命令&quot;)                      print(&quot;——————————————————分割线——————————————————&quot;)                      print(&quot;&quot;)              elif key&#x3D;&#x3D;&#39;0&#39;:                print(&quot;正清理缓存文件...&quot;)                os.system(&#39;@echo off &amp; for &#x2F;d %i in (%temp%\^_MEI*) do (rd &#x2F;s &#x2F;q &quot;%i&quot;)&gt;nul&#39;)                exit(&quot;正在退出程序...&quot;)                            elif key&#x3D;&#x3D;&#39;c&#39;:                os.system(&#39;cls&#39;)                            else:                print(&#39;输入有误或者已经退出!&#39;)                os.system(&#39;pause&#39;)                print(&quot;&quot;)                 print(&quot;——————————————————————————————————————————&quot;)  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h1><span id="3-文件区">3、文件区</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/05/10/448a0196eed77a77.png"></p><p>链接：<a href="https://pan.baidu.com/s/1aemCS7b3EG3AlJUh5bxUuQ">https://pan.baidu.com/s/1aemCS7b3EG3AlJUh5bxUuQ</a><br>提取码：0000</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python使用 </tag>
+            
+            <tag> 自动化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>工作技巧及资源</title>
+      <link href="/2022/04/26/gong-zuo-ji-qiao-ji-zi-yuan/"/>
+      <url>/2022/04/26/gong-zuo-ji-qiao-ji-zi-yuan/</url>
+      
+        <content type="html"><![CDATA[<center>工作技巧及资源</center><!-- toc --><ul><li><a href="#1-%E7%99%BE%E5%BA%A6%E6%96%87%E5%BA%93%E8%B5%84%E6%BA%90%E4%B8%8D%E8%83%BD%E5%A4%8D%E5%88%B6%E5%8F%8A%E4%B8%8D%E8%83%BD%E4%B8%8B%E8%BD%BD%E9%97%AE%E9%A2%98">1、百度文库资源不能复制及不能下载问题</a><ul><li><a href="#%E7%BD%91%E7%9B%98%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6">网盘下载软件:</a></li><li><a href="#u%E7%9B%98%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6">u盘安装软件:</a></li></ul></li><li><a href="#2-ppt%E6%A8%A1%E6%9D%BF">2、ppt模板</a></li><li><a href="#3-%E5%90%8E%E7%BB%AD%E6%9C%89%E6%9C%89%E7%94%A8%E8%B5%84%E6%BA%90%E5%86%8D%E4%BA%8E%E5%A4%A7%E5%AE%B6%E5%88%86%E4%BA%ABo">3、后续有有用资源再于大家分享^o^</a></li></ul><!-- tocstop --><h3><span id="1-百度文库资源不能复制及不能下载问题">1、百度文库资源不能复制及不能下载问题</span></h3><p>难得有个没课的下午，浅浅分享一下</p><p>嗯……百度文库之前有办法不下载软件白嫖，刚才我试了一下两种方法都失效了</p><p>好在豆丁网（跟百度文库差别不大）还可以白嫖</p><p>话不多说，上教程</p><p>首先，咱需要一个软件（亲测绿色无毒,正确操作不流氓）</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/2d9e99e10e17c23f.png"></p><p>软件资源我放咱协会的u盘里了，还有百度网盘，只有5mb，好下</p><h4><span id="网盘下载软件">网盘下载软件:</span></h4><p>链接：<a href="https://pan.baidu.com/s/1msZCAdRoBdO_gcLfpjf-uw">https://pan.baidu.com/s/1msZCAdRoBdO_gcLfpjf-uw</a><br>提取码：0000</p><h4><span id="u盘安装软件">u盘安装软件:</span></h4><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/081b2d23e09eff1f.png"></p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/0dbb4818f84e0c82.png"></p><p>直接将下面这个文件夹拖到你的电脑上就行，软件无需安装</p><p>点开刚才挪过来的文件夹</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/e202df1f03d3e67f.png"></p><p>双击这个绿色图标，即为打开软件</p><p>此时回到浏览器，回到你想要复制或下载的文章（估计ppt也可以）</p><p><img src="https://i.bmp.ovh/imgs/2022/04/26/84731b613d6290d0.png"></p><p>复制这个网址，回到软件，粘贴链接到下图的位置，然后点击下载即可</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/6fd79f6cfa3d1cff.png"></p><p>下载完成后，点击已下载，双击目标文件</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/f12a4e39690147a0.png"></p><p>会跳转到下载好的网址，有pdf版和txt版……^o^</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/4709f1fad4a51a32.png"></p><p><strong>注：</strong>关闭软件时要注意，选不再提示，然后点击取消，2345浏览器是大流氓软件，我没试点击确定会不会被2345浏览器耍流氓。你们在使用时要小心！！！（被耍流氓了别怪我哈，利益于风险并存，点取消啥事没有）^o^</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/26/85d2ee3c4a1bb9bd.png"></p><p>操作不来找我也行,只是肯定没有自己会方便，一次学习，长久收益，哈哈哈</p><h3><span id="2-ppt模板">2、ppt模板</span></h3><p>十万套PPT模板下载链接：<br>提取链接：<a href="https://pan.baidu.com/s/1suBBHOB0Tu_P5f22vNQ9DQ">https://pan.baidu.com/s/1suBBHOB0Tu_P5f22vNQ9DQ</a><br>提取码：ar04</p><h3><span id="3-后续有有用资源再于大家分享o">3、后续有有用资源再于大家分享^o^</span></h3>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> work </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python待解决</title>
+      <link href="/2022/04/22/python-dai-jie-jue/"/>
+      <url>/2022/04/22/python-dai-jie-jue/</url>
+      
+        <content type="html"><![CDATA[<center>python待解决</center><h3><span id="一-列表问题">一、列表问题</span></h3><p>没理解下面截图是为啥</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/22/0c271fb853b3c285.jpg"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python学习 </tag>
+            
+            <tag> python待解决 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python实践小程序</title>
+      <link href="/2022/04/21/python-shi-jian-xiao-cheng-xu/"/>
+      <url>/2022/04/21/python-shi-jian-xiao-cheng-xu/</url>
+      
+        <content type="html"><![CDATA[<center>python实践小程序</center><h5><span id="1-随机抽名小程序">1、随机抽名小程序</span></h5><pre class="line-numbers language-none"><code class="language-none">#随机抽名小程序#Ctrl + c,选最后一h自加数字 &#x3D; 0总人数 &#x3D; 4while 自加数字 &lt; 总人数 + 2:    自加数字 +&#x3D; 1    print(&quot;选中了&quot;, 自加数字, &quot;号&quot;)    if 自加数字 &#x3D;&#x3D; 总人数:        自加数字 &#x3D; 0&#39;&#39;&#39;一号:二号:三号:四号:五号:···&#39;&#39;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python使用 </tag>
+            
+            <tag> python学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python中print（）换行的问题</title>
+      <link href="/2022/04/17/python-zhong-print-huan-xing-de-wen-ti/"/>
+      <url>/2022/04/17/python-zhong-print-huan-xing-de-wen-ti/</url>
+      
+        <content type="html"><![CDATA[<center>python中print（）换行的问题</center><p>python使用print不换行输出</p><blockquote><p>python的print()函数中参数end&#x3D;’ ‘默认为\n，所以会自动换行。<br>默认的print()函数：<br>print(end&#x3D;’\n’)</p></blockquote><p>解决</p><blockquote><p>把参数end&#x3D;’ ‘设置成你想要的就行了，如end&#x3D;’’，那么它就是以结尾</p></blockquote><pre class="line-numbers language-python" data-language="python"><code class="language-python">#默认使用end&#x3D;&quot;\n&quot;换行#这两种效果一致#一：print(&quot;第一行&quot;,end&#x3D;&#39;\n&#39;)print(&quot;第二行&quot;)#二：print(&quot;第一行&quot;)print(&quot;第二行&quot;)print(&#39;--------------------------&#39;)#使用*结尾print(&quot;第一行&quot;,end&#x3D;&quot;*&quot;)print(&quot;第二行&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>运行结果：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; RESTART: G:\python\_work\work1.py &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;第一行第二行第一行第二行--------------------------第一行*第二行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>一直print(),一直换行，哈哈哈哈哈</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">print()print()print()print()print()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; RESTART: G:\python\_work\work1.py &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>^o^</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python使用 </tag>
+            
+            <tag> python学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C语言备忘</title>
+      <link href="/2022/03/31/c-yu-yan-bei-wang/"/>
+      <url>/2022/03/31/c-yu-yan-bei-wang/</url>
+      
+        <content type="html"><![CDATA[<center>C语言备忘</center><h1><span id="优先级和结合性">优先级和结合性</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/06/20/dcbf07fcd4bc8e5d.png"></p><h1><span id="三目运算符">三目运算符</span></h1><blockquote><p>返回值 &#x3D; &lt;表达式1&gt; ? &lt;表达式2&gt; : &lt;表达式3&gt;;</p></blockquote><p><strong>返回值：先求表达式 1 的值，如果为真，则执行表达式 2，并返回表达式 2 的结果；如果表达式 1 的值为假，则执行表达式 3，并返回表达式 3 的结果。</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C语言学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>python学习</title>
+      <link href="/2022/03/31/python-zhi-shi-dian/"/>
+      <url>/2022/03/31/python-zhi-shi-dian/</url>
+      
+        <content type="html"><![CDATA[<center>python知识点备忘</center><!-- toc --><ul><li><a href="#%E4%B8%80-%E5%BF%AB%E6%8D%B7%E9%94%AEpython-idle">一、快捷键（python IDLE）</a><ul><li><a href="#1-%E8%BF%94%E5%9B%9E%E5%A4%8D%E5%88%B6%E4%B8%8A%E4%B8%80%E6%9D%A1%E8%AF%AD%E5%8F%A5">1、返回（复制）上一条语句</a></li></ul></li><li><a href="#%E4%BA%8C-%E7%9F%A5%E8%AF%86%E7%82%B9">二、知识点</a><ul><li><a href="#1-%E6%95%B0%E5%80%BC%E4%BA%A4%E6%8D%A2">1、 数值交换</a></li><li><a href="#2-%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6">2、 转义字符</a></li><li><a href="#3-%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%BF%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E5%A4%B1%E6%95%88">3、 原始字符串（使转义字符失效）</a></li><li><a href="#4-%E4%B8%89%E4%B8%AA%E5%8D%95%E5%BC%95%E5%8F%B7%E6%88%96%E5%8F%8C%E5%BC%95%E5%8F%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E6%8B%AC%E5%8F%B7%E4%B8%AD%E5%86%85%E5%AE%B9%E4%BC%9A%E5%8E%9F%E6%A0%B7%E4%BF%9D%E5%AD%98%E5%8C%85%E6%8B%AC%E6%8D%A2%E8%A1%8C">4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）</a></li><li><a href="#5-%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E5%87%86%E8%BF%90%E7%AE%97%E6%A8%A1%E5%9D%97-decimal">5、浮点数的精准运算模块—-decimal</a></li><li><a href="#6-%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95">6、科学计数法</a></li><li><a href="#7-%E5%A4%8D%E6%95%B0">7、复数</a></li><li><a href="#8-%E5%9C%B0%E6%9D%BF%E9%99%A4-">8、地板除— &#x2F;&#x2F;</a></li><li><a href="#9-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0">9、内置函数</a><ul><li><a href="#1divmod">（1）divmod</a></li><li><a href="#2abs">（2）abs</a></li><li><a href="#3pow">（3）pow</a></li><li><a href="#4bool">（4）bool（）</a></li><li><a href="#5len">（5）len（）</a></li><li><a href="#6range">（6）range（）</a></li></ul></li><li><a href="#10-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">10、类型转换</a></li><li><a href="#11-x-y">11、x ** y</a></li><li><a href="#12-%E7%9F%AD%E8%B7%AF%E9%80%BB%E8%BE%91">12、短路逻辑</a></li><li><a href="#13-%E4%BC%98%E5%85%88%E7%BA%A7">13、优先级</a></li><li><a href="#14-%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84">14、分支结构</a><ul><li><a href="#1%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F">(1)条件表达式</a></li><li><a href="#2%E5%88%86%E6%94%AF%E5%B5%8C%E5%A5%97">（2）分支嵌套</a></li></ul></li><li><a href="#15-%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84">15、循环结构</a><ul><li><a href="#1while">（1）while</a><ul><li><a href="#1whileelse">[1]while………else……</a></li><li><a href="#2whlie%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97">[2]whlie循环嵌套</a></li></ul></li><li><a href="#2for">(2)for</a><ul><li><a href="#1for%E5%BE%AA%E7%8E%AF%E5%B5%8C%E5%A5%97">[1]for循环嵌套</a></li></ul></li></ul></li><li><a href="#16-%E5%88%97%E8%A1%A8">16、列表</a><ul><li><a href="#1%E5%8F%AF%E5%AD%98%E6%94%BE%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE">（1）可存放不同类型数据</a></li><li><a href="#2%E9%85%8D%E5%90%88for%E5%BE%AA%E7%8E%AF%E4%BD%BF%E7%94%A8">(2)配合for循环使用</a></li><li><a href="#3%E5%88%97%E8%A1%A8%E7%B4%A2%E5%BC%95">（3）列表索引</a></li><li><a href="#4%E5%88%97%E8%A1%A8%E5%88%87%E7%89%87">(4)列表切片</a><ul><li><a href="#1%E5%88%97%E8%A1%A8%E5%88%87%E7%89%87%E4%B8%8D%E5%AF%B9%E5%88%97%E8%A1%A8%E4%B8%8B%E6%A0%87%E8%B6%8A%E7%95%8C%E5%A4%84%E7%90%86%E5%A6%82%E4%B8%8B">[1]列表切片不对列表下标越界处理，如下</a></li><li><a href="#2%E5%88%97%E8%A1%A8%E5%88%87%E7%89%87%E4%B8%AD%E6%95%B0%E5%AD%97%E9%97%AE%E9%A2%98">[2]列表切片中数字问题</a></li><li><a href="#3%E5%8F%AF%E8%AE%BE%E7%BD%AE%E8%B7%A8%E5%BA%A6">[3]可设置跨度</a></li><li><a href="#4%E5%80%92%E5%8F%99%E8%BE%93%E5%87%BA">[4]倒叙输出</a></li><li><a href="#5%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5">[5]增&#x2F;删&#x2F;改&#x2F;查</a><ul><li><a href="#11%E5%A2%9Eappend">{1.1}增:append（）</a></li><li><a href="#12extend">{1.2}extend([])</a></li><li><a href="#13%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8%E5%88%87%E7%89%87%E5%A2%9E%E5%8A%A0">{1.3}使用列表切片增加</a></li><li><a href="#14%E6%8F%92%E5%85%A5%E5%88%B0%E4%B8%AD%E9%97%B4%E6%88%96%E4%BB%BB%E6%84%8F%E4%BD%8D%E7%BD%AE">{1.4}插入到中间（或任意位置）</a></li><li><a href="#21%E5%88%A0remove">{2.1}删remove（）</a></li><li><a href="#22%E4%BD%BF%E7%94%A8%E4%B8%8B%E6%A0%87%E5%88%A0%E9%99%A4pop">{2.2}使用下标删除pop（）</a></li><li><a href="#23%E6%B8%85%E7%A9%BAclear">{2.3}清空clear（）</a></li><li><a href="#31%E6%94%B9">{3.1}改</a></li><li><a href="#32%E6%8E%92%E5%BA%8F">{3.2}排序</a></li><li><a href="#41%E6%9F%A5count">{4.1}查count（）</a></li><li><a href="#51%E6%94%B9copy">{5.1}改copy()</a></li><li><a href="#6%E5%8A%A0-%E4%B9%98">{6}加、乘</a></li><li><a href="#7%E5%B5%8C%E5%A5%97%E5%A4%9A%E7%BB%B4%E5%88%97%E8%A1%A8">{7}嵌套（多维列表）</a></li><li><a href="#8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9C%8B%E4%BC%BC%E7%9B%B8%E5%90%8C%E5%AE%9E%E5%88%99%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%B9%E6%B3%95">{8}初始化的两种看似相同实则不同的方法</a></li><li><a href="#9%E6%B7%B1%E6%8B%B7%E8%B4%9D">{9}深拷贝</a></li><li><a href="#10%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F">{10}列表推导式</a></li></ul></li></ul></li></ul></li></ul></li></ul><!-- tocstop --><h1><span id="一-快捷键python-idle">一、快捷键（python IDLE）</span></h1><h3><span id="1-返回复制上一条语句">1、返回（复制）上一条语句</span></h3><p>AIt + p</p><h1><span id="二-知识点">二、知识点</span></h1><h3><span id="1-数值交换">1、 数值交换</span></h3><p>x , y &#x3D; y , x</p><h3><span id="2-转义字符">2、 转义字符</span></h3><p>用于:’’’life is short,let\’ use python”’</p><h3><span id="3-原始字符串使转义字符失效">3、 原始字符串（使转义字符失效）</span></h3><p>Print（r”a\tdsfg\ndfgb\tsadsf”）</p><p>结果: a\tdsfg\ndfgb\tsadsf</p><h3><span id="4-三个单引号或双引号的使用括号中内容会原样保存包括换行">4、三个单引号或双引号的使用：括号中内容会原样保存（包括换行）</span></h3><h3><span id="5-浮点数的精准运算模块-decimal">5、浮点数的精准运算模块—-decimal</span></h3><p>​    使用原因：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">0.1+0.20.30000000000000004<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">0.1 + 0.2 &#x3D;&#x3D; 0.3False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>运用decimal后</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">import decimala &#x3D; decimal.Decimal(&#39;0.1&#39;)b &#x3D; decimal.Decimal(&#39;0.2&#39;)print(a + b)0.3c &#x3D; decimal.Decimal(&#39;0.3&#39;)a + b &#x3D;&#x3D; cTrue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3><span id="6-科学计数法">6、科学计数法</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">0.000000066e-08#0.6*10负8次方<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3><span id="7-复数">7、复数</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">x &#x3D; 1 + 2jx.real1.0x.imag2.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3><span id="8-地板除-x2fx2f">8、地板除— &#x2F;&#x2F;</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">3 &#x2F;&#x2F; 21-3 &#x2F;&#x2F; 2-2#结果向下取整<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h3><span id="9-内置函数">9、内置函数</span></h3><h4><span id="1divmod">（1）divmod</span></h4><p>divmod(x , y)返回（x &#x2F;&#x2F; y , x % y）</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">divmod(5 , 2)(2, 1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h4><span id="2abs">（2）abs</span></h4><p>取绝对值（模）</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">abs(-6)6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">abs(1 + 2j)2.23606797749979pow(5 , 0.5)2.23606797749979<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>pow函数基础功能不再赘述</p><h4><span id="3pow">（3）pow</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">pow(2 , 3 , 6)2#等价于2 ** 3 % 62<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4><span id="4bool">（4）bool（）</span></h4><p>用于返回一个布尔类型的值（True 或者 False）</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; bool(250)True&gt;&gt;&gt; bool(&quot;False&quot;)True&gt;&gt;&gt; bool(0.0)False&gt;&gt;&gt; bool([])False&gt;&gt;&gt; bool(range(0))False<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4><span id="5len">（5）len（）</span></h4><p><strong>返回值：</strong></p><p>返回对象的长度（包含元素的数量）。<br><strong>基本用法：</strong></p><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt; len(&quot;FishC&quot;)5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h4><span id="6range">（6）range（）</span></h4><p>通常用于配合 for 循环指定循环的次数。</p><p>range() 有三种参数的组合使用方式，但无论选择哪一种，其参数类型仅能为整数。</p><p>如果 step 参数忽略，那么默认的步进跨度值为 1。</p><p><strong>三种形式：</strong></p><blockquote><p>range(stop)</p><p>range(start , stop)</p><p>range(start , stop , step)</p></blockquote><p>示例:</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in range(10):    print(i , end&#x3D;&#39; &#39;)print()print(&quot;······&quot;)for i in range(4 , 10):    print(i , end &#x3D; &#39; &#39;)print()print(&quot;······&quot;)for i in range(5 , 20 , 2):    print(i , end &#x3D; &#39; &#39;)print()print(&quot;······&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">0 1 2 3 4 5 6 7 8 9 ······4 5 6 7 8 9 ······5 7 9 11 13 15 17 19 ······<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>说明：</strong></p><p>range（）中stop为不包含</p><h3><span id="10-类型转换">10、类型转换</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">complex(&quot;1+2j&quot;)(1+2j)complex(&quot;1 + 2j&quot;)Traceback (most recent call last):  File &quot;&lt;pyshell#37&gt;&quot;, line 1, in &lt;module&gt;    complex(&quot;1 + 2j&quot;)ValueError: complex() arg is a malformed string<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>转换时不能有空格</p><h3><span id="11-x-y">11、x ** y</span></h3><p>x的y次方</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">2 ** 38<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3><span id="12-短路逻辑">12、短路逻辑</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">3 and 000 and 100 or 333 or 0#3 or 0 在读取到‘3 or’时已经可以得出结果3#无需再继续读取，py直接扔出‘3’<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3><span id="13-优先级">13、优先级</span></h3><blockquote><p>and大于or</p></blockquote><p><img src="https://i.bmp.ovh/imgs/2022/04/15/9f58cff9bc04b299.png" alt="python优先级"></p><h3><span id="14-分支结构">14、分支结构</span></h3><p>elif等于C语言中else if</p><h4><span id="1条件表达式">(1)条件表达式</span></h4><p>不喜欢用。。。。。</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 6b &#x3D; 8small &#x3D; a if a &lt; b else bprint(small)&#39;&#39;&#39;不能像下面这样，会报错a &#x3D; 6b &#x3D; 8small &#x3D; a if a &lt; b else small &#x3D; bprint(small)&#39;&#39;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4><span id="2分支嵌套">（2）分支嵌套</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 3b &#x3D; 1c &#x3D; 2if a &lt; b:    if a &lt; c:        small &#x3D; a        print(small)else:    if b &lt; c:        small &#x3D; b        print(small)    else:        small &#x3D; c        print(small)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>注：</strong>if判断后需要有：</p><p>​        else后同样需要：</p><p>​        不能print（small &#x3D; a）</p><h3><span id="15-循环结构">15、循环结构</span></h3><h4><span id="1while">（1）while</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; 0sum &#x3D; 0while a &lt; 10 :    sum &#x3D; sum + a    a &#x3D; a + 1    print(sum)45<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>注1：</strong>判断条件后要有:</p><p><strong>注2：</strong>python中不能变量++</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">b &#x3D; 0b ++SyntaxError: invalid syntaxb++SyntaxError: invalid syntaxb++;SyntaxError: invalid syntax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5><span id="1whileelse">[1]while………else……</span></h5><p>当循环正常退出时，才执行else里内容</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">#源代码day &#x3D; 1while day &lt; 8:    anwser &#x3D; input(&quot;志坤今天进步一点点了吗？&quot;)    if anwser &#x3D;&#x3D; &quot;是的！&quot;:        print(&quot;志坤真棒！&quot;)    else:        break    day &#x3D; day + 1else:    print(&quot;志坤好厉害^o^&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">#循环异常退出（break使循环结束）时情况&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; RESTART: G:\python\_work\work1.py &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;志坤今天进步一点点了吗？不是#循环正常结束时情况&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; RESTART: G:\python\_work\work1.py &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;志坤今天进步一点点了吗？是的！志坤真棒！志坤今天进步一点点了吗？是的！志坤真棒！志坤今天进步一点点了吗？是的！志坤真棒！志坤今天进步一点点了吗？是的！志坤真棒！志坤今天进步一点点了吗？是的！志坤真棒！志坤今天进步一点点了吗？是的！志坤真棒！志坤今天进步一点点了吗？是的！志坤真棒！志坤好厉害^o^<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5><span id="2whlie循环嵌套">[2]whlie循环嵌套</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#九九乘法表i &#x3D; 1while i &lt;&#x3D; 9:    j &#x3D; 1    while j &lt;&#x3D; i:        print(j,&quot;*&quot;,i,&quot;&#x3D;&quot;,j*i,end&#x3D;&quot; &quot;)        j +&#x3D; 1    print()    i +&#x3D; 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>执行结果：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; RESTART: G:\python\_work\work1.py &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;1 * 1 &#x3D; 1 1 * 2 &#x3D; 2 2 * 2 &#x3D; 4 1 * 3 &#x3D; 3 2 * 3 &#x3D; 6 3 * 3 &#x3D; 9 1 * 4 &#x3D; 4 2 * 4 &#x3D; 8 3 * 4 &#x3D; 12 4 * 4 &#x3D; 16 1 * 5 &#x3D; 5 2 * 5 &#x3D; 10 3 * 5 &#x3D; 15 4 * 5 &#x3D; 20 5 * 5 &#x3D; 25 1 * 6 &#x3D; 6 2 * 6 &#x3D; 12 3 * 6 &#x3D; 18 4 * 6 &#x3D; 24 5 * 6 &#x3D; 30 6 * 6 &#x3D; 36 1 * 7 &#x3D; 7 2 * 7 &#x3D; 14 3 * 7 &#x3D; 21 4 * 7 &#x3D; 28 5 * 7 &#x3D; 35 6 * 7 &#x3D; 42 7 * 7 &#x3D; 49 1 * 8 &#x3D; 8 2 * 8 &#x3D; 16 3 * 8 &#x3D; 24 4 * 8 &#x3D; 32 5 * 8 &#x3D; 40 6 * 8 &#x3D; 48 7 * 8 &#x3D; 56 8 * 8 &#x3D; 64 1 * 9 &#x3D; 9 2 * 9 &#x3D; 18 3 * 9 &#x3D; 27 4 * 9 &#x3D; 36 5 * 9 &#x3D; 45 6 * 9 &#x3D; 54 7 * 9 &#x3D; 63 8 * 9 &#x3D; 72 9 * 9 &#x3D; 81 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4><span id="2for">(2)for</span></h4><blockquote><p>for 变量 in 可迭代对象</p><p>​    statement(s)</p></blockquote><p>示例1：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">&gt;&gt;&gt;for each in &quot;xiao kun kun&quot;:    print(each)    xiao kun kun<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>示例2：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in range(10):    print(i , end&#x3D;&#39; &#39;)print()print(&quot;······&quot;)for i in range(4 , 10):    print(i , end &#x3D; &#39; &#39;)print()print(&quot;······&quot;)for i in range(5 , 20 , 2):    print(i , end &#x3D; &#39; &#39;)print()print(&quot;······&quot;)    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果2：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">0 1 2 3 4 5 6 7 8 9 ······4 5 6 7 8 9 ······5 7 9 11 13 15 17 19 ······<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5><span id="1for循环嵌套">[1]for循环嵌套</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#找出十以内所有素数k &#x3D; 0for i in range(1, 11):    k &#x3D; 0    for j in range(2, i):        if i % j !&#x3D; 0:            k +&#x3D; 1    if k &#x3D;&#x3D; i - 2:        print(i,&quot;是素数&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">2 是素数3 是素数5 是素数7 是素数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>使用while（for）…….else…..结构的进阶版：</p><p>哈哈哈，这么简单的小程序还有进阶版，没想到吧^O^</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">#找出十以内所有素数进阶版for i in range(1, 11):    for j in range(2, i):        if i % j &#x3D;&#x3D; 0:            break    else:        print(i,&quot;是素数&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">1 是素数2 是素数3 是素数5 是素数7 是素数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>确实不需要增加变量（k）来计数了，真不错</p><h3><span id="16-列表">16、列表</span></h3><h4><span id="1可存放不同类型数据">（1）可存放不同类型数据</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 23, &quot;点&quot;, 29, &quot;分&quot;]print(time)[&#39;现在是晚上&#39;, 23, &#39;点&#39;, 29, &#39;分&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h4><span id="2配合for循环使用">(2)配合for循环使用</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">for time in time:    print(time, end&#x3D;&#39; &#39;)现在是晚上 23 点 29 分 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h4><span id="3列表索引">（3）列表索引</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">#列表下标也可为负数time &#x3D; [&quot;现在是晚上&quot;, 23, &quot;点&quot;, 29, &quot;分&quot;]i &#x3D; len(time)while i &gt; 0:    print(time[-i],end&#x3D;&#39; &#39;)    i -&#x3D; 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">现在是晚上 23 点 29 分<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4><span id="4列表切片">(4)列表切片</span></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 23, &quot;点&quot;, 29, &quot;分&quot;]print(time[0:3])[&#39;现在是晚上&#39;, 23, &#39;点&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h5><span id="1列表切片不对列表下标越界处理如下">[1]列表切片不对列表下标越界处理，如下</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">time[4:6][&#39;分&#39;]time[4:100][&#39;分&#39;]time[5:100][]time[20:100][]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5><span id="2列表切片中数字问题">[2]列表切片中数字问题</span></h5><p>列表切片中十进制整数字面值中不允许前导零;八进制整数使用0o前缀</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 22, &quot;点&quot;, 06, &quot;分&quot;]SyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h5><span id="3可设置跨度">[3]可设置跨度</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">#name[start:end:跨度]number &#x3D; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]number[2:9:2][3, 5, 7, 9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h5><span id="4倒叙输出">[4]倒叙输出</span></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 22, &quot;点&quot;, 6, &quot;分&quot;]print(time[::-1])[&#39;分&#39;, 6, &#39;点&#39;, 22, &#39;现在是晚上&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h5><span id="5增x2f删x2f改x2f查">[5]增&#x2F;删&#x2F;改&#x2F;查</span></h5><h6><span id="11增append">{1.1}增:append（）</span></h6><p>在列表尾部加入新元素（一次只能加一个元素）</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">#错误示范time.append(36, &quot;秒&quot;)TypeError: list.append() takes exactly one argument (2 given)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">#正确示范time.append(36)time.append(&quot;秒&quot;)time[&#39;现在是晚上&#39;, 22, &#39;点&#39;, 6, &#39;分&#39;, 36, &#39;秒&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="12extend">{1.2}extend([])</span></h6><p>对象为可迭代对象，追加在列表后面</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 22, &quot;点&quot;, 6, &quot;分&quot;]time[&#39;现在是晚上&#39;, 22, &#39;点&#39;, 6, &#39;分&#39;]time.extend([36,&quot;秒&quot;])time[&#39;现在是晚上&#39;, 22, &#39;点&#39;, 6, &#39;分&#39;, 36, &#39;秒&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="13使用列表切片增加">{1.3}使用列表切片增加</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#增加一个元素time &#x3D; [&quot;现在是晚上&quot;, 22, &quot;点&quot;, 6, &quot;分&quot;]time[len(time):] &#x3D; [36]time[&#39;现在是晚上&#39;, 22, &#39;点&#39;, 6, &#39;分&#39;, 36]time &#x3D; [&quot;现在是晚上&quot;, 22, &quot;点&quot;, 6, &quot;分&quot;]#增加多个元素time[len(time):] &#x3D; [36, &quot;秒&quot;]time[&#39;现在是晚上&#39;, 22, &#39;点&#39;, 6, &#39;分&#39;, 36, &#39;秒&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="14插入到中间或任意位置">{1.4}插入到中间（或任意位置）</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">time &#x3D; [&quot;现在是晚上&quot;, 22]time.insert(2,&quot;点&quot;)time[&#39;现在是晚上&#39;, 22, &#39;点&#39;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="21删remove">{2.1}删remove（）</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#存在多个被删元素时，只删除第一个abc &#x3D; [1, 2, 3, 4, 1, 2, 3]abc.remove(1)abc[2, 3, 4, 1, 2, 3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>注：</strong>被删元素不存在时，程序报错</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">abc &#x3D; [1, 2, 3, 4, 1, 2, 3]abc.remove(10)ValueError: list.remove(x): x not in list<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h6><span id="22使用下标删除pop">{2.2}使用下标删除pop（）</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">qwe &#x3D; [123, 456, 789]qwe.pop(0)123qwe[456, 789]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="23清空clear">{2.3}清空clear（）</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">qwe &#x3D; [123, 456, 789]qwe.clear()qwe[]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="31改">{3.1}改</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#简单下标索引更改qwe &#x3D; [123, 456, 789]qwe[0] &#x3D; 369qwe[369, 456, 789]#一次更改多个元素qwe &#x3D; [123, 456, 789]qwe[2:] &#x3D; [159, 487, 753]#从第二个后面开始更改qwe[123, 456, 159, 487, 753]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="32排序">{3.2}排序</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#从小到大number &#x3D; [1, 9, 2, 7, 0, 6, 3]number.sort()number[0, 1, 2, 3, 6, 7, 9]#第一与最后一个元素互换，第二与倒数第二......number &#x3D; [1, 9, 2, 7, 0, 6, 3]number.reverse()number[3, 6, 0, 7, 2, 9, 1]#从大到小number &#x3D; [1, 9, 2, 7, 0, 6, 3]number.sort()number.reverse()number[9, 7, 6, 3, 2, 1, 0]#从大到小（2）number &#x3D; [1, 9, 2, 7, 0, 6, 3]number.sort(reverse&#x3D;True)#T要大写number[9, 7, 6, 3, 2, 1, 0]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="41查count">{4.1}查count（）</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#查元素个数num &#x3D; [1,5,4,84,1,1,1,1]num.count(1)5#查元素下标wsx &#x3D; [&quot;abc&quot;,&quot;qwe&quot;,&quot;rgy&quot;,&quot;qwe&quot;]wsx.index(&quot;qwe&quot;)1#有相同元素时返回第一个被查元素的下标#index（被查，start，end）wsx &#x3D; [&quot;abc&quot;,&quot;qwe&quot;,&quot;rgy&quot;,&quot;qwe&quot;]wsx.index(&quot;qwe&quot;,2,4)3#不包括end这个元素wsx &#x3D; [&quot;abc&quot;,&quot;qwe&quot;,&quot;rgy&quot;,&quot;qwe&quot;]wsx.index(&quot;qwe&quot;,2,3)ValueError: &#39;qwe&#39; is not in list<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="51改copy">{5.1}改copy()</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">numbers_copy &#x3D; number.copy()numbers_copy[9, 7, 6, 3, 2, 1, 0]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h6><span id="6加-乘">{6}加、乘</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#加i &#x3D; [1, 2, 3]j &#x3D; [4, 5, 6]i + j[1, 2, 3, 4, 5, 6]#乘i*3[1, 2, 3, 1, 2, 3, 1, 2, 3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="7嵌套多维列表">{7}嵌套（多维列表）</span></h6><p>创立:</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D; [[1, 2, 3],     [4, 5, 6],     [7, 8, 9]]a[[1, 2, 3], [4, 5, 6], [7, 8, 9]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>访问：</p><p>需使用循环</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in a:    for j in i:        print(j,end&#x3D;&quot; &quot;)    print()1 2 3 4 5 6 7 8 9 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>下标访问:</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">a[0][0]1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h6><span id="8初始化的两种看似相同实则不同的方法">{8}初始化的两种看似相同实则不同的方法</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">for i in range(3):    a[i] &#x3D; [0]*3a[[0, 0, 0], [0, 0, 0], [0, 0, 0]]b &#x3D; [[0]*3]*3b[[0, 0, 0], [0, 0, 0], [0, 0, 0]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>两种结果看似相同，第二种甚至不需要使用循环就创建了一个二维列表</p><p>但，实际上两种方法在内存上有很大差别</p><p>先展示区别</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">a[1][1] &#x3D; 1a[[0, 0, 0], [0, 1, 0], [0, 0, 0]]b[1][1] &#x3D; 1b[[0, 1, 0], [0, 1, 0], [0, 1, 0]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>a列表在更改a【1】【1】时实实在在就是更改a【1】【1】</p><p>而b列表在更改b【1】【1】时，却更改了所有的第二列元素</p><p>在此介绍一个运算符——-is</p><p>is运算符用于检验两个变量是否指向同一个变量</p><p>举例:</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">x &#x3D; &#39;xiaokunkun&#39;y &#x3D; &#39;xiaokunkun&#39;x is yTruea &#x3D; 1b &#x3D; 2a is bFalse<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://s3.bmp.ovh/imgs/2022/04/22/a7d7be155092d19f.png"></p><h6><span id="9深拷贝">{9}深拷贝</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">import copyx &#x3D; [[1, 2, 3], [4, 5, 6], [7, 8, 9]]y &#x3D; copy.deepcopy(x)x[1][1] &#x3D; 0x[[1, 2, 3], [4, 0, 6], [7, 8, 9]]y[[1, 2, 3], [4, 5, 6], [7, 8, 9]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h6><span id="10列表推导式">{10}列表推导式</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#示例一oho &#x3D; [1, 2, 3, 4, 5, 6]owo &#x3D; [i*2 for i in oho]owo[2, 4, 6, 8, 10, 12]#示例二matrix &#x3D; [[1, 2, 3],          [4, 5, 6],          [7, 8, 9]]diag &#x3D; [matrix[i][i] for i in range(len(matrix))]diag[1, 5, 9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python使用 </tag>
+            
+            <tag> python学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用python中numpy计算多元一次方程</title>
+      <link href="/2022/03/21/shi-yong-python-zhong-numpy-ji-suan-duo-yuan-yi-ci-fang-cheng/"/>
+      <url>/2022/03/21/shi-yong-python-zhong-numpy-ji-suan-duo-yuan-yi-ci-fang-cheng/</url>
+      
+        <content type="html"><![CDATA[<center>使用python中numpy计算多元一次方程</center><p>在pycharm中Terminal中输入</p><p>pip install numpy</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/0632eb017b39f583.png"></p><p>然后输入这串代码（例子）</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">import  numpy as np#多元线性方程组# x-2y+3z&#x3D;-10# 2x+3y+4z&#x3D;5# 3x+5y+7z&#x3D;7A&#x3D;np.array([[1,-2,3],[2,3,4],[3,5,7]])b&#x3D;np.array([-10,5,7])x&#x3D;np.linalg.solve(A,b)print(&#39;多元一次方程组的解：\n&#39;,x)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/dd0f6f1ea2078586.png" alt="示例"></p><p>run一下即可得出结果^_^</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/073e3f4bd338e6eb.png" alt="结果"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 多元一次方程 </tag>
+            
+            <tag> numpy </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第四篇</title>
+      <link href="/2022/02/26/di-si-pian/"/>
+      <url>/2022/02/26/di-si-pian/</url>
+      
+        <content type="html"><![CDATA[<center>第四篇</center><hr><p>&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</p><hr><p>昨天考到了驾照，今天上午发到位。挺不错，终于告一段落，不过花了5千左右，哈哈。</p><p>快开学了，加油，it’s time to work.</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 不天天写的日记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第三篇</title>
+      <link href="/2022/02/21/di-san-pian/"/>
+      <url>/2022/02/21/di-san-pian/</url>
+      
+        <content type="html"><![CDATA[<center>第三篇</center><hr><p>&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</p><hr><p>哈哈，今天大头的好朋友卷花跑路了，因为大头跟我打游戏而没有跟他玩。九级闺蜜要8000的亲密度？好家伙，我进去一看我跟好儿子才3000多，8000亲密度还不咋一起玩。俩人也挺努力的，嘿嘿。</p><p>斯~，要不我加那男的好友跟他解释解释？加回来？加回来亲密度也没有了吧。</p><p>哎，可恶的大头，怎么傻傻的，老是生气，哼！傻大头，可恶！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 不天天写的日记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>51单片机数码管使用问题</title>
+      <link href="/2022/02/16/51-dan-pian-ji-shu-ma-guan-shi-yong-wen-ti/"/>
+      <url>/2022/02/16/51-dan-pian-ji-shu-ma-guan-shi-yong-wen-ti/</url>
+      
+        <content type="html"><![CDATA[<center>51单片机数码管使用问题</center><p>在想让数码管显示时间如：</p><p>00：01：59</p><p>且按时钟一样进行，每秒加一</p><pre class="line-numbers language-c" data-language="c"><code class="language-c">#include &lt;stdio.h&gt;unsigned int sec1, sec2, min1, min2, hour;void main()&#123;for (;;hour++)&#123;for (min2 &#x3D; 0;min2 &lt; 6;min2++)&#123;for (min1 &#x3D; 0;min1 &lt; 10;min1++)&#123;for (sec2 &#x3D; 0;sec2 &lt; 6;sec2++)&#123;for (sec1 &#x3D; 0;sec1 &lt; 10;sec1++)&#123;printf(&quot;%d:&quot;, hour);printf(&quot;%d&quot;, min2);printf(&quot;%d:&quot;, min1);printf(&quot;%d&quot;, sec2);printf(&quot;%d:&quot;, sec1);printf(&quot;\n&quot;);if (hour &#x3D;&#x3D; 1)&#123;exit(0);&#125;&#125;&#125;&#125;&#125;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/63580261908da062.png"></p><p>经尝试，思路可行，但用同样思路将代码转换到51单片机上用数码管显示就出现了较大的重影问题，几乎是看不出正常数字。</p><p>用LCD1602显示容易且清晰。</p><p>解决出问题价值不太大，暂且放置。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 51MCU </category>
+          
+          <category> 待解决 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 单片机 </tag>
+            
+            <tag> 数码管 </tag>
+            
+            <tag> 待解决 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第二篇</title>
+      <link href="/2022/02/14/di-er-pian/"/>
+      <url>/2022/02/14/di-er-pian/</url>
+      
+        <content type="html"><![CDATA[<center>第二篇</center><hr><p>&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</p><hr><p>科三终于考过了，挺好。</p><p>今天是叫情人节吧，智者不入爱河，学习才是王道。</p><p>加油吧，追梦人！</p><p>^_^</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 不天天写的日记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>matery文章隐藏</title>
+      <link href="/2022/02/13/matery-wen-zhang-yin-cang/"/>
+      <url>/2022/02/13/matery-wen-zhang-yin-cang/</url>
+      
+        <content type="html"><![CDATA[<p>在文章这一区域</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/3947095660a71940.png"></p><p>加上</p><blockquote><p>hide: true</p></blockquote><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/15a0b48341155e77.png"></p><p>这样文章便在主页不显示，可在分类或标签栏找到</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo使用 </tag>
+            
+            <tag> matery使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一篇</title>
+      <link href="/2022/02/13/di-yi-pian/"/>
+      <url>/2022/02/13/di-yi-pian/</url>
+      
+        <content type="html"><![CDATA[<center>第一篇</center><hr><p>&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;</p><hr><p>今天发布了我的b站第一个作品，6小时后只有7个播放量，哈哈哈。</p><p>明天又又又考科三，希望能过。</p><p>不出意外，现在0:22了，不知道这篇日记算哪一天的。以后要早睡。</p><p>晚安，我自己^_^</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 不天天写的日记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo文章设置密码注意事项</title>
+      <link href="/2022/02/12/hexo-wen-zhang-she-zhi-mi-ma-zhu-yi-shi-xiang/"/>
+      <url>/2022/02/12/hexo-wen-zhang-she-zhi-mi-ma-zhu-yi-shi-xiang/</url>
+      
+        <content type="html"><![CDATA[<p>在使用hexo中想要给文章设置密码</p><p>如何开启文章密码就不再说了，百度一下就行</p><p>说一下我在这个过程中遇到的没有百度到的问题</p><p>你在博客文章设置密码时是这样的吗？</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/cfa9755c0a2f0aaf.png" alt="错误示例"></p><p>这样的话在你以为成功设置后，进入你的这篇文章。</p><blockquote><p>输入你设定的密码，发现怎么输入都是密码错误</p></blockquote><p>出现这样的问题我们只需来到只需来到</p><p>[oschina的解密加密板块](<a href="https://tool.oschina.net/encrypt?type=2">在线加密解密 (oschina.net)</a>)</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/1684d5f842cd0c5b.png" alt="加密"></p><p>明文处就是你要设置的密码，然后选择加密方式</p><p>得出哈希值，复制哈希值到你的博客文章password这栏</p><p>注意password：后有一个空格</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/15/81cc0568d8586af0.png" alt="正确示范"></p><p>这样进入你要加密的文章时，只要输入你设置的密码（不是哈希值，是明码），便可进入^_^</p><p>第一次使用typora写博客，确实方便，尤其是在博客文章中插图片。在成功配置前出了一下问题，不过网上都有解决方案^_^</p><p>2022-2-13,0:00</p><p>嘿嘿，刚好这个点</p><p>睡觉（月亮）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo文章密码使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>matery上下边框换及回到顶部按钮混合颜色设置</title>
+      <link href="/2022/02/11/hexo-shang-xia-bian-kuang-huan-ji-hui-dao-ding-bu-an-niu-hun-he-yan-se-she-zhi/"/>
+      <url>/2022/02/11/hexo-shang-xia-bian-kuang-huan-ji-hui-dao-ding-bu-an-niu-hun-he-yan-se-she-zhi/</url>
+      
+        <content type="html"><![CDATA[<h1><span id="hexo上下边框换及回到顶部按钮混合颜色设置">hexo上下边框换及回到顶部按钮混合颜色设置</span></h1><p>找到并打开themes\hexo-theme-matery\source\css\matery.css</p><h2><span id="上下边框">上下边框</span></h2><p>按住‘ctrl+f’查找bg-color<br>将自带的颜色修改为自己喜欢的颜色，且可按照相同格式添加颜色<br>实现混色</p><h2><span id="回到顶部按钮">回到顶部按钮</span></h2><p>按住‘ctrl+f’查找回到顶部按钮样式<br>修改颜色方式同上</p><h2><span id="通用">通用</span></h2><p>同样方法查找‘#’，可修改各种颜色<br>如文章字体颜色、网页页脚字体颜色……</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> matery边框颜色 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo文章新建及使用技巧</title>
+      <link href="/2022/02/10/hexo-wen-zhang-xin-jian-ji-shi-yong-ji-qiao/"/>
+      <url>/2022/02/10/hexo-wen-zhang-xin-jian-ji-shi-yong-ji-qiao/</url>
+      
+        <content type="html"><![CDATA[<h1><span id="hexo文章新建及使用技巧">hexo文章新建及使用技巧</span></h1><h2><span id="新建">新建</span></h2><p>在与themes同级的文件中找到source并打开<br>鼠标右键空白处，使用Git Bash Here<br>输入命令:hexo n (+文章名字)(回车执行)<br>括号区域输入文章名字即可，不需要括号和+<br>打开_posts<br>打开新生成的文件</p><h2><span id="使用技巧">使用技巧</span></h2><h3><span id="名称释义">名称释义</span></h3><p>tags:(标签)<br>categories;(分类)</p><h3><span id="标题表示">标题表示</span></h3><p>#+空格后跟一级标题<br>##+空格后跟二级标题<br>###+空格后跟三级标题<br>在matery主题下不同标题字体大小相同<br>但在右侧目录显示不同(手机端没有目录)</p><h3><span id="插入链接">插入链接</span></h3><pre class="line-numbers language-none"><code class="language-none">[链接名字](链接地址)[668rose](https:&#x2F;&#x2F;github.com&#x2F;668rose)注:符号要用英文<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p><a href="https://github.com/668rose">668rose</a> </p><h3><span id="插入图片">插入图片</span></h3><pre class="line-numbers language-none"><code class="language-none">![图片名](图片链接)[derrick rose](https:&#x2F;&#x2F;gimg2.baidu.com&#x2F;image_search&#x2F;src&#x3D;http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F363e340758f99044c96e5678f88fa80433aab15b.jpg&amp;refer&#x3D;http%3A%2F%2Fi0.hdslb.com&amp;app&#x3D;2002&amp;size&#x3D;f9999,10000&amp;q&#x3D;a80&amp;n&#x3D;0&amp;g&#x3D;0n&amp;fmt&#x3D;jpeg?sec&#x3D;1647069648&amp;t&#x3D;7a80850f2f40e0d8239dfabba35c7e63)注:符号要用英文<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F363e340758f99044c96e5678f88fa80433aab15b.jpg&refer=http%3A%2F%2Fi0.hdslb.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1647069648&t=7a80850f2f40e0d8239dfabba35c7e63" alt="derrick rose"></p><h3><span id="改变字体">改变字体</span></h3><p>斜体:** <em>(在**中间的内容为斜体)</em><br>粗体:**** <strong>(在四个*中间的内容为粗体)</strong></p><h3><span id="改变代码显示形式">改变代码显示形式</span></h3><pre class="line-numbers language-none"><code class="language-none">单行:&#96;&#96;  (在&#96;&#96;中间的内容为代码格式)多行:(三个&#96;)代码内容(三个&#96;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3><span id="表示引用">表示引用</span></h3><pre class="line-numbers language-none"><code class="language-none">&gt;后跟引用内容加一空行表示引用结束<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><blockquote><p>此为引用效果</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>指针做函数参数的问题</title>
+      <link href="/2022/02/09/c-yu-yan-zhong-zhi-zhen-zuo-han-shu-can-shu-de-yi-cuo-wen-ti/"/>
+      <url>/2022/02/09/c-yu-yan-zhong-zhi-zhen-zuo-han-shu-can-shu-de-yi-cuo-wen-ti/</url>
+      
+        <content type="html"><![CDATA[<h1><span id="c语言中指针做函数参数的易错问题">C语言中指针做函数参数的易错问题</span></h1><h1><span id="c语言中函数多个返回值问题">C语言中函数多个返回值问题</span></h1><p> 在第一次编写创建链表的函数时，我是这样写的;<br> 是在主函数定义了:<br> <pre class="line-numbers language-none"><code class="language-none">struct student* p;p&#x3D;NULL;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br> 将p作为input函数形参;而函数没有返回值；<br> 如下:<br> <pre class="line-numbers language-none"><code class="language-none">void input(struct student* head)&#123;struct student* p2, * p1;p1 &#x3D; p2 &#x3D; (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);head &#x3D; p1; &#x2F;&#x2F;试图改变head指针，来改变pfor (;p1-&gt;number !&#x3D; 0;)&#123;p1 &#x3D; (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);p2-&gt;next &#x3D; p1;p2 &#x3D; p1;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br> 试图这样改变主函数中的p;<br> 而实际执行后主函数中的p并没有指向head;<br> p依然是NULL;</p><p> 在翻书后发现书中使用函数返回值来实现改变p的指向;<br> 于是，我作出如下改变,结果可行;<br> <pre class="line-numbers language-none"><code class="language-none"> struct student* input(void)&#123;struct student* p1, * p2, * head;p1 &#x3D; p2 &#x3D; (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);head &#x3D; p1;for (;p1-&gt;number !&#x3D; 0;)&#123;p1 &#x3D; (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);p2-&gt;next &#x3D; p1;p2 &#x3D; p1;&#125;return head;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可为什么最初的方法不行呢？指针不是传地址吗？<br>input函数中改变head的地址了呀;这令我百思不得其解;<br>直到我看到BraveY的一篇博客文章，<br>其中讲到:</p><blockquote><p>指针形参也是一种‘值的传递’，只是因为传递的是一个对象的地址，<br>因此可以通过解引用符*来对该对象直接进行修改，<br>所以在被调用函数中可以直接根据地址来进行操作，<br>从而使得该地址的变量被修改。</p></blockquote><p>正确写法:</p><blockquote><p>首先明确这段代码的意图是想让p指针这个变量的值在被调用函数中发生变化，<br>因为需要修改实参变量的值，所以需要传入实参的地址，<br>指向指针的地址也就是一个二级指针。<br>所以形参应该是一个二级指针，<br>在被调用函数中使用*来对地址进行解引用。</p></blockquote><p>看到这里我恍然大悟!</p><p><img src="https://s3.bmp.ovh/imgs/2022/04/27/09a7d1e627d3f280.jpg"></p><p>将代码改为:<br>主函数中:<br><code>input(&amp;p);</code><br>input函数中:</p><pre class="line-numbers language-none"><code class="language-none">void input(struct student** p)&#123;struct student* p1, * p2, * head;p1 &#x3D; p2 &#x3D; (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);head &#x3D; p1;for (;p1-&gt;number !&#x3D; 0;)&#123;p1 &#x3D; (struct student*)malloc(LEN);scanf_s(&quot;%d&quot;, &amp;p1-&gt;number);scanf_s(&quot;%s&quot;, &amp;p1-&gt;name, 10);scanf_s(&quot;%f&quot;, &amp;p1-&gt;mark);p2-&gt;next &#x3D; p1;p2 &#x3D; p1;&#125;*p &#x3D; head;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>经测试，没有问题。<br>你可能会说，这么麻烦干嘛……（擦汗）<br>因为这样可以实现函数多个返回值（机智），<br>一次改变多个主函数数据，<br>同样的思路将需要改变的变量做参数即可，哈哈^_^</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+            <tag> C函数 </tag>
+            
+            <tag> C指针 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
