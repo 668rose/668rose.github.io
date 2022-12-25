@@ -4,10 +4,29 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数据结构和算法, Forging">
-    <meta name="description" content="数据结构和算法
+    <meta name="keywords" content="STM32学习笔记, Forging">
+    <meta name="description" content="STM32学习笔记
 
-一、算法效率的度量方法">
+
+
+
+一、STM32系统结构
+二、引脚定义
+三、EXTI外部中断
+1、抢占优先级、响应优先级
+2、NVIC优先级分组
+
+
+四、TIM定时器
+1、基本定时器
+2、通用定时器
+3、定时器初始化
+定时器库函数介绍：
+
+
+
+
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +38,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数据结构和算法 | Forging</title>
+    <title>STM32学习笔记 | Forging</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -474,12 +493,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据结构和算法</h1>
+                    <h1 class="description center-align post-title">STM32学习笔记</h1>
                 </div>
             </div>
         </div>
@@ -595,8 +614,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">数据结构和算法</span>
+                            <a href="/tags/STM32/">
+                                <span class="chip bg-color">STM32</span>
                             </a>
                         
                     </div>
@@ -607,8 +626,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/" class="post-category">
-                                数据结构和算法
+                            <a href="/categories/STM32/" class="post-category">
+                                STM32
                             </a>
                         
                     </div>
@@ -620,28 +639,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-28
+                    2022-12-25
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-28
+                    2022-12-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    17
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    9 分
                 </div>
                 
 
@@ -664,9 +683,245 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <center>数据结构和算法</center>
+                <center>STM32学习笔记</center>
 
-<h1><span id="一-算法效率的度量方法">一、算法效率的度量方法</span></h1>
+<!-- toc -->
+
+<ul>
+<li><a href="#%E4%B8%80-stm32%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84">一、STM32系统结构</a></li>
+<li><a href="#%E4%BA%8C-%E5%BC%95%E8%84%9A%E5%AE%9A%E4%B9%89">二、引脚定义</a></li>
+<li><a href="#%E4%B8%89-exti%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD">三、EXTI外部中断</a><ul>
+<li><a href="#1-%E6%8A%A2%E5%8D%A0%E4%BC%98%E5%85%88%E7%BA%A7-%E5%93%8D%E5%BA%94%E4%BC%98%E5%85%88%E7%BA%A7">1、抢占优先级、响应优先级</a></li>
+<li><a href="#2-nvic%E4%BC%98%E5%85%88%E7%BA%A7%E5%88%86%E7%BB%84">2、NVIC优先级分组</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-tim%E5%AE%9A%E6%97%B6%E5%99%A8">四、TIM定时器</a><ul>
+<li><a href="#1-%E5%9F%BA%E6%9C%AC%E5%AE%9A%E6%97%B6%E5%99%A8">1、基本定时器</a></li>
+<li><a href="#2-%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8">2、通用定时器</a></li>
+<li><a href="#3-%E5%AE%9A%E6%97%B6%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96">3、定时器初始化</a><ul>
+<li><a href="#%E5%AE%9A%E6%97%B6%E5%99%A8%E5%BA%93%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D">定时器库函数介绍：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="一-stm32系统结构">一、STM32系统结构</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/12/25/eb1dd66182698ab1.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/12/25/fa9b28785ee6d282.png"></p>
+<p><strong>AHB系统总线：</strong>挂载的一般是最基本的或者性能比较高的外设</p>
+<p><strong>APB2、APB1：</strong>两个外设总线，APB2一般和AHB同频率，都是72MHz，APB1一般是36MHz</p>
+<p><strong>APB：</strong>先进外设总线，用于连接一般的外设</p>
+<p><strong>DMA：</strong>用来干类似数据搬运这种简单且反复要干的活</p>
+<h1><span id="二-引脚定义">二、引脚定义</span></h1><p><img src="https://s3.bmp.ovh/imgs/2022/12/25/e7e1f236e4ed1c1d.png"></p>
+<p><strong>颜色标记：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">红色</th>
+<th align="center">蓝色</th>
+<th align="center">绿色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">电源相关引脚</td>
+<td align="center">最小系统相关引脚</td>
+<td align="center">IO口、功能口引脚</td>
+</tr>
+</tbody></table>
+<p><strong>FT：</strong>Five voltage Tolerant，就是5V容忍</p>
+<p><strong>主功能：</strong>上电后默认的功能，一般和引脚名称相同。如果不同，引脚实际功能是主功能，而不是引脚名称的功能</p>
+<p><strong>默认复用功能：</strong>IO口上同时连接的外设功能引脚（配置IO口时可以选择通用IO口还是复用功能）</p>
+<p><strong>表中加粗IO口和没加粗IO口：</strong>推荐优先使用加粗IO口，没有加粗的IO口可能需要配置或者兼具其他功能，使用时需要留意一下</p>
+<p><strong>34号 + 37 ~ 40号：</strong>这些是IO口或者调试端口，默认主功能是调试端口</p>
+<h1><span id="三-exti外部中断">三、EXTI外部中断</span></h1><h2><span id="1-抢占优先级-响应优先级">1、抢占优先级、响应优先级</span></h2><p>响应优先级：</p>
+<p>上一个病人在看病，外面排队了很多病人。当上一个病人看完后，紧急的病人即使是后来的，也会最先进去看病。</p>
+<p>抢占优先级：</p>
+<p>上一个病人正在看病，还没看完，这时来了一个更加紧急的病人，那他可以不等上个人看完，直接冲到医生屋里，让上一个病人先靠边站，先给他看，给他看完了，再给上一个病人看。这种决定是不是可以中断嵌套的优先级，就叫抢占优先级。</p>
+<h2><span id="2-nvic优先级分组">2、NVIC优先级分组</span></h2><p>NVIC的中断优先级由优先级寄存器的4位(十进制：0-15，二进制：0-1111)决定,这4位可以进行切分，分为高n位的抢占优先级和低4-n位的响应优先级</p>
+<p>抢占优先级高的可以中断嵌套，响应优先级高的可以优先排队，抢占优先级和响应优先级均相同的按中断号排队</p>
+<p>分组方式：</p>
+<table>
+<thead>
+<tr>
+<th align="center">分组方式</th>
+<th align="center">抢占优先级</th>
+<th align="center">响应优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">分组0</td>
+<td align="center">0位，取值为0</td>
+<td align="center">4位,取值为0~15（二进制：0-1111）</td>
+</tr>
+<tr>
+<td align="center">分组1</td>
+<td align="center">1位，取值为0~1</td>
+<td align="center">3位，取值为0~7（二进制0-111）</td>
+</tr>
+<tr>
+<td align="center">分组2</td>
+<td align="center">2位，取值为0~3</td>
+<td align="center">2位，取值为0~3（二进制：0-11）</td>
+</tr>
+<tr>
+<td align="center">分组3</td>
+<td align="center">3位，取值为0~7</td>
+<td align="center">1位，取值1为0~1</td>
+</tr>
+<tr>
+<td align="center">分组4</td>
+<td align="center">4位，取值为0~15</td>
+<td align="center">0位，取值为0</td>
+</tr>
+</tbody></table>
+<p>EXTI简介：</p>
+<p>EXTI可以监测指定GPIO口的电平信号,当其指定的GPIO口产生电平变化时, EXTI将立即向NVIC发出中断申请,经过NVIC裁决后即可中断CPU主程序,使CPU执行EXTI对应的中断程序</p>
+<p>支持的触发方式:上升沿&#x2F;下降沿&#x2F;双边沿（上升、下降都可以）&#x2F;软件触发（程序触发）</p>
+<p>支持的GPIO口:所有GPIO口，但相同的Pin不能同时触发</p>
+<p>中断通道数: 16个GPIO_Pin,外加PVD输出、RTC闹钟、USB唤醒、以太网唤醒</p>
+<p>触发响应方式:中断响应&#x2F;事件响应</p>
+<p> EXTI基本结构：</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/12/25/5f374363422170d5.png"></p>
+<p><strong>注意：</strong>外部中断9~5会触发同一个中断函数，15-10也会触发同一个中断函数。在编程的时候我们需要再根据标志位来区分到底是哪个中断进来的。</p>
+<h1><span id="四-tim定时器">四、TIM定时器</span></h1><h2><span id="1-基本定时器">1、基本定时器</span></h2><p><img src="https://s3.bmp.ovh/imgs/2022/12/25/3f8fc4bd44eaf856.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/12/25/6608faa1535b416f.png"></p>
+<p><strong>预分频器：</strong>对72MHz的计数时钟进行预分频。这个寄存器写0，就是不分频（或叫做一分频），此时  输出频率 &#x3D; 输入频率 &#x3D; 72MHz。如果写1，那就是2分频，输出频率 &#x3D; 输入频率&#x2F;2 &#x3D; 36MHz。以此类推……这个预分频器是16位的，所以最大写65535，也就是65536分频</p>
+<p>​    <strong>注：</strong>若当计数记到一半的时候改变了分频值，这个变化不会立即生效（此时计数频率仍然保持为原来的频率），而是会等到本次计数周期结束时，产生了更新事件，预分频寄存器的值才会被传递到缓冲寄存器里面去，才会生效（上一轮计数完成后，在下一轮计数时，改变后的分频值才会起作用）。</p>
+<p><strong>计数器：</strong>对预分频后的计数时钟进行计数，计数时钟每来一个上升沿，计数器的值加1。计数器也是16位的，所以里面的值可以从0一直加到65535，如果再加的话，计数器会回到0重新开始</p>
+<p><strong>自动重装寄存器：</strong>它存的是我们写入的计数目标。同样是16位的。在运行过程中，计数值不断自增，自动重装值是固定目标。当计数值等于自动重装值时，也就是计时时间到了，它产生一个中断信号（通往NVIC），并且清零计数器，计数器自动开始下一次的计数计时</p>
+<h2><span id="2-通用定时器">2、通用定时器</span></h2><p><img src="https://s3.bmp.ovh/imgs/2022/12/25/fd0b84264d0fcff2.png"></p>
+<p><strong>计数模式：</strong>还支持向下计数模式和中央对齐模式</p>
+<blockquote>
+<p>向下计数模式：从重装值开始，向下自减，减到0之后，回到重装值（直接回到重装值，不是再自增上去）同时申请中断，然后继续下一轮，依次循环</p>
+</blockquote>
+<blockquote>
+<p>中央对齐计数模式：从0开始，先向上自增，记到重装值，申请中断。然后向下自减，减到0，再申请中断。然后进行下一轮，依次循环</p>
+</blockquote>
+<p><strong>内外时钟源选择：</strong>不仅可以选择内部的72MHz时钟，还可以选择外部时钟（来自TIMx_ETR引脚上的外部时钟）</p>
+<h2><span id="3-定时器初始化">3、定时器初始化</span></h2><p><img src="https://s3.bmp.ovh/imgs/2022/12/25/a474bec7b1f167a3.png"></p>
+<p>只需要把这里面的每个模块都打通，就可以让定时器工作了。</p>
+<p><strong>大体步骤：</strong></p>
+<blockquote>
+<p>第一步：RCC开启时钟，定时器基准时钟和整个外设的工作时钟就都会同时打开了。</p>
+</blockquote>
+<blockquote>
+<p>第二步：选择时基单元的时钟源，对于定时中断，我们就选择内部时钟源</p>
+</blockquote>
+<blockquote>
+<p>第三步：配置时基单元，包括预分频器、自动重装器、计数模式等等（用一个结构体配置）</p>
+</blockquote>
+<blockquote>
+<p>第四步：配置输出中断控制，允许更新中断输出到NVIC</p>
+</blockquote>
+<blockquote>
+<p>第五步：配置NVIC，在NVIC中打开定时器中断的通道，并分配一个优先级</p>
+</blockquote>
+<blockquote>
+<p>第六步：运行控制，使能计数器</p>
+</blockquote>
+<h3><span id="定时器库函数介绍">定时器库函数介绍：</span></h3><pre class="line-numbers language-none"><code class="language-none">void TIM_DeInit(TIM_TypeDef* TIMx);
+恢复缺省配置<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct);
+时基单元初始化
+两个参数：
+第一个TIMx选择某个定时器。
+第二个是结构体，里面包含了配置时基单元的一些参数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_TimeBaseStructInit(TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct);
+把结构体变量赋一个默认值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_Cmd(TIM_TypeDef* TIMx, FunctionalState NewState);
+使能计数器（对应图里的运行控制）
+两个参数：
+第一个选择定时器。
+第二个状态，使能，计数器运行，失能，计数器不运行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_ITConfig(TIM_TypeDef* TIMx, uint16_t TIM_IT, FunctionalState NewState);
+用来使能中断输出信号（对应图中中断输出控制）
+参数：
+第一个：选择定时器。
+第二个：选择配置哪个中断输出。
+第三个：使能还是失能。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_InternalClockConfig(TIM_TypeDef* TIMx);
+void TIM_ITRxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource);
+void TIM_TIxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_TIxExternalCLKSource,
+                                uint16_t TIM_ICPolarity, uint16_t ICFilter);
+void TIM_ETRClockMode1Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM_ExtTRGPolarity,
+                             uint16_t ExtTRGFilter);
+void TIM_ETRClockMode2Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, 
+                             uint16_t TIM_ExtTRGPolarity, uint16_t ExtTRGFilter);
+void TIM_ETRConfig(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM_ExtTRGPolarity,
+                   uint16_t ExtTRGFilter);
+这六个函数对应时基单元的时钟选择部分<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_InternalClockConfig(TIM_TypeDef* TIMx);
+选择内部时钟<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_ITRxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_InputTriggerSource);
+选择ITRx其他定时器的时钟
+参数：
+TIMx：选择要配置的定时器。
+第二个：选择要接入哪个其它的定时器。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_TIxExternalClockConfig(TIM_TypeDef* TIMx, uint16_t TIM_TIxExternalCLKSource,
+                                uint16_t TIM_ICPolarity, uint16_t ICFilter);
+
+选择TIx捕获通道的时钟
+参数：
+TIMx：选择要配置的定时器。
+第二个：选择TIx具体的某个引脚。
+ICPolarity和ICFilter：输入的极性和滤波器。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_ETRClockMode1Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM_ExtTRGPolarity,
+                             uint16_t ExtTRGFilter);
+选择ETR通过外部时钟模式一输入的时钟
+参数：
+ExitTRGPrescaler：外部触发预分频器，对ETR的外部时钟再提前做一个分频。
+Polarity和Filter：极性和滤波器。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_ETRClockMode2Config(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, 
+                             uint16_t TIM_ExtTRGPolarity, uint16_t ExtTRGFilter);
+同上
+对于ETR输入的外部时钟而言，这两个函数是等效的，如果不需要输入触发的功能，那两个函数可以互换。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_ETRConfig(TIM_TypeDef* TIMx, uint16_t TIM_ExtTRGPrescaler, uint16_t TIM_ExtTRGPolarity,
+                   uint16_t ExtTRGFilter);
+不是用来选择时钟的，是用来单独配置ETR引脚的预分频器、极性、滤波器这些参数的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_PrescalerConfig(TIM_TypeDef* TIMx, uint16_t Prescaler, uint16_t TIM_PSCReloadMode);
+用来单独写预分频值
+参数：
+Prescaler：预分频值。
+PSCReladMode：写入的模式，可以选择听从安排，在更新事件后生效，或者是，在写入后，手动产生一个更行事件，让这个值立即生效<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_CounterModeConfig(TIM_TypeDef* TIMx, uint16_t TIM_CounterMode);
+用来改变计数器的计数模式<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_ARRPreloadConfig(TIM_TypeDef* TIMx, FunctionalState NewState);
+自动重装器预装功能配置<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_SetCounter(TIM_TypeDef* TIMx, uint16_t Counter);
+给计数器写入一个值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">void TIM_SetAutoreload(TIM_TypeDef* TIMx, uint16_t Autoreload);
+给自动重装器写入一个值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">uint16_t TIM_GetCounter(TIM_TypeDef* TIMx);
+获取当前计数器的值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">uint16_t TIM_GetPrescaler(TIM_TypeDef* TIMx);
+获取当前预分频器的值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">FlagStatus TIM_GetFlagStatus(TIM_TypeDef* TIMx, uint16_t TIM_FLAG);
+void TIM_ClearFlag(TIM_TypeDef* TIMx, uint16_t TIM_FLAG);
+ITStatus TIM_GetITStatus(TIM_TypeDef* TIMx, uint16_t TIM_IT);
+void TIM_ClearITPendingBit(TIM_TypeDef* TIMx, uint16_t TIM_IT);
+用来获取标志位和清除标志位的四个函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
                 
             </div>
             <hr/>
@@ -692,7 +947,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://668rose.github.io/2022/06/28/shu-ju-jie-gou-he-suan-fa/">http://668rose.github.io/2022/06/28/shu-ju-jie-gou-he-suan-fa/</a>
+                    <a href="http://668rose.github.io/2022/12/25/stm32-xue-xi-bi-ji/">http://668rose.github.io/2022/12/25/stm32-xue-xi-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -730,8 +985,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">数据结构和算法</span>
+                                <a href="/tags/STM32/">
+                                    <span class="chip bg-color">STM32</span>
                                 </a>
                             
                         </div>
@@ -1050,17 +1305,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/07/26/java/">
+                <a href="/2022/12/25/stm32-xue-xi-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Java">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="STM32学习笔记">
                         
-                        <span class="card-title">Java</span>
+                        <span class="card-title">STM32学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1070,26 +1326,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/hexo/" class="post-category">
-                                    hexo
+                            <a href="/categories/STM32/" class="post-category">
+                                    STM32
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/STM32/">
+                        <span class="chip bg-color">STM32</span>
                     </a>
                     
                 </div>
@@ -1103,13 +1360,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/06/14/c-xian-jing-yu-que-xian/">
+                <a href="/2022/10/07/ocl-dian-lu-jie-huo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="C陷阱与缺陷">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="OCL电路解惑">
                         
-                        <span class="card-title">C陷阱与缺陷</span>
+                        <span class="card-title">OCL电路解惑</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1120,14 +1377,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    C语言
+                            <a href="/categories/%E6%A8%A1%E7%94%B5/" class="post-category">
+                                    模电
                                 </a>
                             
                             
@@ -1137,8 +1394,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                        <span class="chip bg-color">C语言</span>
+                    <a href="/tags/%E6%A8%A1%E7%94%B5/">
+                        <span class="chip bg-color">模电</span>
                     </a>
                     
                 </div>
