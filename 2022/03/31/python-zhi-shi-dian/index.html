@@ -642,7 +642,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-12
+                    2023-09-14
                 </div>
                 
 
@@ -753,6 +753,7 @@
 <li><a href="#8%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9C%8B%E4%BC%BC%E7%9B%B8%E5%90%8C%E5%AE%9E%E5%88%99%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%B9%E6%B3%95">{8}初始化的两种看似相同实则不同的方法</a></li>
 <li><a href="#9%E6%B7%B1%E6%8B%B7%E8%B4%9D">{9}深拷贝</a></li>
 <li><a href="#10%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F">{10}列表推导式</a></li>
+<li><a href="#11">{11}</a></li>
 </ul>
 </li>
 </ul>
@@ -787,7 +788,7 @@ a + b &#x3D;&#x3D; c
 True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3><span id="6-科学计数法">6、科学计数法</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">0.00000006
-6e-08		#0.6*10负8次方<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+6e-08		#6*10负8次方<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h3><span id="7-复数">7、复数</span></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">x &#x3D; 1 + 2j
 x.real
@@ -893,7 +894,7 @@ ValueError: complex() arg is a malformed string<span aria-hidden="true" class="l
 3			#无需再继续读取，py直接扔出‘3’<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3><span id="13-优先级">13、优先级</span></h3><blockquote>
-<p>and大于or</p>
+<p>and小于or</p>
 </blockquote>
 <p><img src="https://i.bmp.ovh/imgs/2022/04/15/9f58cff9bc04b299.png" alt="python优先级"></p>
 <h3><span id="14-分支结构">14、分支结构</span></h3><p>elif等于C语言中else if</p>
@@ -1321,7 +1322,8 @@ y
 [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h6><span id="10列表推导式">{10}列表推导式</span></h6><pre class="line-numbers language-python" data-language="python"><code class="language-python">#示例一
+<h6><span id="10列表推导式">{10}列表推导式</span></h6><p>列表推导式的效率通常比循环语句要快上一倍左右的速度</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">#示例一
 oho &#x3D; [1, 2, 3, 4, 5, 6]
 owo &#x3D; [i*2 for i in oho]
 owo
@@ -1334,7 +1336,7 @@ diag &#x3D; [matrix[i][i] for i in range(len(matrix))]
 diag
 [1, 5, 9]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
+<h6><span id="11">{11}</span></h6>
                 
             </div>
             <hr/>
